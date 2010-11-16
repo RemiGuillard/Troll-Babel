@@ -1,11 +1,12 @@
 #include <QTcpSocket>
 #include <QUdpSocket>
+#include <QObject>
 #include <QMessageBox>
 #include "QNetwork.h"
 
 QNetwork::QNetwork()
 {
-
+//	QObject::connect(_sock, SIGNAL(connected()), this, SLOT(nowConnected()))
 }
 
 QNetwork::~QNetwork()
@@ -44,6 +45,8 @@ void		QNetwork::socketConnection(const QString & hostName, quint16 port)
 		QMessageBox::information(NULL, "Connection Error", s.setNum(_sock->state()));
 }
 
+
+
 void		QNetwork::packetRcv()
 {
 }
@@ -57,4 +60,3 @@ void		QNetwork::disconnect()
 	QMessageBox::information(NULL, "Connection Exit", "You're now disconnected");
 	_sock->close();
 }
-

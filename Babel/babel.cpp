@@ -6,8 +6,8 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 {
 	ui.setupUi(this);
 
-	connect(ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
-	connect(this, SIGNAL(valueChanged(int)), ui.stackWindows, SLOT(setCurrentIndex(int)));
+	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
+	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
 
 	_server.createSocket();
 }
