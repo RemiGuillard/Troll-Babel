@@ -22,6 +22,8 @@ public:
 	void				packetSend();
 	void				disconnect();
 
+	QAbstractSocket*	getSocket() const;
+
 private:
 	QAbstractSocket*	_sock;
 };

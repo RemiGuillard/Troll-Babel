@@ -16,6 +16,7 @@ public:
 public slots:
 	void	changerPage();
 	void	connectToServer();
+	void	login();
 
 signals:
 	void	valueChanged(int);
@@ -23,6 +24,7 @@ signals:
 private:
 	Ui::BabelClass	ui;
 	QNetwork		_server;
+	QNetwork		_client;
 };
 
 #endif // BABEL_H

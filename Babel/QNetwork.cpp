@@ -38,11 +38,10 @@ void		QNetwork::socketConnection(const QString & hostName, quint16 port)
 	QString s(0);
 	//QMessageBox::information(NULL, "Connection Status", s.setNum(_sock->state()));
 	
-//	if (_sock->waitForConnected(3000))
 	if (_sock->state() == QAbstractSocket::ConnectedState)
 		this->setSocketStatus(true);
-	else
-		QMessageBox::information(NULL, "Connection Error", s.setNum(_sock->state()));
+//	else
+//		QMessageBox::information(NULL, "Connection Error", s.setNum(_sock->state()));
 }
 
 
@@ -59,4 +58,9 @@ void		QNetwork::disconnect()
 {
 	QMessageBox::information(NULL, "Connection Exit", "You're now disconnected");
 	_sock->close();
+}
+
+QAbstractSocket*		QNetwork::getSocket() const
+{
+	return _sock;
 }
