@@ -28,7 +28,7 @@ signals:
 private:
 	Ui::BabelClass	ui;
 	QNetwork		_server;
-	QUdpSocket		_client;
+	QNetwork		_client;
 };
 
 #endif // BABEL_H

@@ -7,8 +7,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 {
 	ui.setupUi(this);
 	_server.createSocket();
-//	_client.(QAbstractSocket::UdpSocket);
-	//_client.getSocket()->bind();
+	_client.createSocket(QAbstractSocket::UdpSocket);
 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
@@ -17,7 +16,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 
 	/*Appel*/
 	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(appeler()));
-	connect(&_client, SIGNAL(connected()), this, SLOT(startCalling()));
+	connect(this->_client.getSocket(), SIGNAL(connected()), this, SLOT(startCalling()));
 	connect(this->ui.bindButton, SIGNAL(clicked()), this, SLOT(startBinding()));
 }
 
@@ -63,7 +62,7 @@ void		Babel::login()
 
 void		Babel::appeler()
 {
-	this->_client.connectToHost(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
+	this->_client.getSocket()->connectToHost(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
 }
 
 void		Babel::startCalling()
@@ -73,5 +72,5 @@ void		Babel::startCalling()
 
 void		Babel::startBinding()
 {
-	this->_client.bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
+	dynamic_cast<QUdpSocket*>(this->_client.getSocket())->bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
 }
