@@ -17,6 +17,7 @@ public slots:
 	void	changerPage();
 	void	connectToServer();
 	void	login();
+	void	appeler();
 
 signals:
 	void	valueChanged(int);

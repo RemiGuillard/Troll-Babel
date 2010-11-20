@@ -7,11 +7,14 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 {
 	ui.setupUi(this);
 	_server.createSocket();
+	_client.createSocket(QAbstractSocket::UdpSocket);
 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
-	connect(_server.getSocket(), SIGNAL(connected()), this, SLOT(changerPage()));
+	connect(this->_server.getSocket(), SIGNAL(connected()), this, SLOT(changerPage()));
 	connect(this->ui.loginButton, SIGNAL(clicked()), this, SLOT(login()));
+	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(appeler()));
+	connect(this->_server.getSocket(), SIGNAL(connected), this, SLOT(startCalling()));
 }
 
 Babel::~Babel()
@@ -43,11 +46,18 @@ void		Babel::login()
 {
 	std::string	login = ui.loginField->text().toStdString();	
 	std::string	pwd = ui.passwordField->text().toStdString();	
+	
 	QString toto;
 	toto = "Login: ";
 	toto += ui.loginField->text();
 	toto += "\nPwd:  ";
 	toto += ui.passwordField->text();
-
 	QMessageBox::information(this, "Information", toto);
+
+	emit valueChanged(2);
+}
+
+void		Babel::appeler()
+{
+	this->_client.socketConnection(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
 }
