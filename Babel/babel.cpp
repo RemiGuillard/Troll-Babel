@@ -18,6 +18,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(appeler()));
 	connect(this->_client.getSocket(), SIGNAL(connected()), this, SLOT(startCalling()));
 	connect(this->ui.bindButton, SIGNAL(clicked()), this, SLOT(startBinding()));
+	connect(this->ui.stateButton, SIGNAL(clicked()), this, SLOT(getStatusSocket()));
 }
 
 Babel::~Babel()
@@ -68,9 +69,16 @@ void		Babel::appeler()
 void		Babel::startCalling()
 {
 	QMessageBox::information(this, "Information", "You're Now Connected to the Client");
+	emit valueChanged(3);
 }
 
 void		Babel::startBinding()
 {
 	dynamic_cast<QUdpSocket*>(this->_client.getSocket())->bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
+}
+
+void		Babel::getStatusSocket()
+{
+	QString	status(0);
+	QMessageBox::information(this, "Information", status.setNum(_client.getSocketStatus()));
 }
