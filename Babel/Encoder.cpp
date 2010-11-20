@@ -1,0 +1,47 @@
+#include <iostream>
+#include "Encoder.h"
+
+Encoder::Encoder(int quality)
+{
+	if (quality < 1 || quality > 10)
+		quality = 5;
+	speex_bits_init(&ebits);
+	enc_state = speex_encoder_init(&speex_nb_mode);
+	speex_encoder_ctl(enc_state,SPEEX_SET_QUALITY,&quality);
+	std::cout << "Encoder Created with quality = " << quality << std::endl;
+	speex_bits_init(&dbits);
+    dec_state = speex_decoder_init(&speex_nb_mode);
+}
+
+Encoder::~Encoder()
+{
+	speex_bits_destroy(&ebits);
+	speex_encoder_destroy(enc_state);
+	std::cout << "Encoder destroyed" << std::endl;
+}
+
+
+void	Encoder::encode(short *input, char *output)
+{
+	int nbBytes;
+	int	size;
+	int	i = 0;
+	float	in[INPUT_SIZE];
+
+	while(i < INPUT_SIZE)
+		in[i] = input[i++];
+
+	speex_bits_reset(&this->ebits);
+	speex_encode(this->enc_state, in, &this->ebits);
+	size = speex_bits_nbytes(&this->ebits);
+	nbBytes = speex_bits_write(&this->ebits, output, size);
+}
+
+void	Encoder::decode(char *input, short *output)
+{
+	int frame_size;
+
+    speex_bits_read_from(&dbits, input, INPUT_SIZE);
+    speex_decoder_ctl(dec_state, SPEEX_GET_FRAME_SIZE, &frame_size);
+    speex_decode_int(dec_state, &dbits, output);
+}
