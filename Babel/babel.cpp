@@ -74,19 +74,27 @@ void		Babel::startCalling()
 {
 	QString	status(0);
 	QMessageBox::information(this, "Information", status.setNum(_client.getSocketStatus()));
-	QMessageBox::information(this, "Information", "You're Now Connected to the Client");
+	QMessageBox::information(this, "Information", "LOLOLOLYou're Now Connected to the Client");
 	emit valueChanged(3);
 }
 
 void		Babel::startBinding()
 {
+	QString status(0);
 	QUdpSocket* socket = reinterpret_cast<QUdpSocket *>(this->_client.getSocket());
+
 	if (socket == NULL)
 		QMessageBox::information(this, "Information", "Socket NULL");
-	if (socket->bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort()) == false)
+
+
+	if (socket->bind(this->ui.PortClientLine->text().toUShort(), QUdpSocket::ShareAddress) == false)
 		QMessageBox::information(this, "Information", "Bind suce");
 	else
+	{
 		QMessageBox::information(this, "Information", "Binded");
+		QMessageBox::information(this, "Information", status.setNum(_client.getSocketStatus()));
+	}
+	QMessageBox::information(this, "Information", socket->errorString());
 			
 }
 

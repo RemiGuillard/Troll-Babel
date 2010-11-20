@@ -206,7 +206,7 @@ p, li { white-space: pre-wrap; }
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap>../qt-logo.png</pixmap>
+              <pixmap>qt-logo.png</pixmap>
              </property>
             </widget>
            </item>

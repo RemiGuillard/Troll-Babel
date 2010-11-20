@@ -29,7 +29,10 @@ void		QNetwork::createSocket(QAbstractSocket::SocketType sock)
 	if (sock == QAbstractSocket::TcpSocket)
 		_sock = new QTcpSocket;
 	else if (sock == QAbstractSocket::UdpSocket)
+	{
 		_sock = new QUdpSocket;
+		//_sock->bind()
+	}
 }
 
 void		QNetwork::socketConnection(const QString & hostName, quint16 port)
