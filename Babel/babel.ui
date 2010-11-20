@@ -289,10 +289,17 @@ p, li { white-space: pre-wrap; }
         <item row="3" column="0">
          <widget class="QLineEdit" name="PortClientLine"/>
         </item>
-        <item row="4" column="0">
+        <item row="5" column="0">
          <widget class="QPushButton" name="callButton">
           <property name="text">
            <string>Appeler</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="bindButton">
+          <property name="text">
+           <string>Bind</string>
           </property>
          </widget>
         </item>

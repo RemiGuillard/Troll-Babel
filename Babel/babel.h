@@ -2,6 +2,7 @@
 #define BABEL_H
 
 #include <QtGui/QMainWindow>
+#include <QUdpSocket>
 #include "ui_babel.h"
 #include "QNetwork.h"
 
@@ -18,6 +19,8 @@ public slots:
 	void	connectToServer();
 	void	login();
 	void	appeler();
+	void	startCalling();
+	void	startBinding();
 
 signals:
 	void	valueChanged(int);
@@ -25,7 +28,7 @@ signals:
 private:
 	Ui::BabelClass	ui;
 	QNetwork		_server;
-	QNetwork		_client;
+	QUdpSocket		_client;
 };
 
 #endif // BABEL_H

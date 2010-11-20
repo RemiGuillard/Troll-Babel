@@ -7,14 +7,18 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 {
 	ui.setupUi(this);
 	_server.createSocket();
-	_client.createSocket(QAbstractSocket::UdpSocket);
+//	_client.(QAbstractSocket::UdpSocket);
+	//_client.getSocket()->bind();
 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
 	connect(this->_server.getSocket(), SIGNAL(connected()), this, SLOT(changerPage()));
 	connect(this->ui.loginButton, SIGNAL(clicked()), this, SLOT(login()));
+
+	/*Appel*/
 	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(appeler()));
-	connect(this->_server.getSocket(), SIGNAL(connected), this, SLOT(startCalling()));
+	connect(&_client, SIGNAL(connected()), this, SLOT(startCalling()));
+	connect(this->ui.bindButton, SIGNAL(clicked()), this, SLOT(startBinding()));
 }
 
 Babel::~Babel()
@@ -59,5 +63,15 @@ void		Babel::login()
 
 void		Babel::appeler()
 {
-	this->_client.socketConnection(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
+	this->_client.connectToHost(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
+}
+
+void		Babel::startCalling()
+{
+	QMessageBox::information(this, "Information", "You're Now Connected to the Client");
+}
+
+void		Babel::startBinding()
+{
+	this->_client.bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
 }
