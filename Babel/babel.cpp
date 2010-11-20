@@ -19,6 +19,9 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	connect(this->_client.getSocket(), SIGNAL(connected()), this, SLOT(startCalling()));
 	connect(this->ui.bindButton, SIGNAL(clicked()), this, SLOT(startBinding()));
 	connect(this->ui.stateButton, SIGNAL(clicked()), this, SLOT(getStatusSocket()));
+	connect(this->ui.statButton, SIGNAL(clicked()), this, SLOT(getStatusSocket()));
+
+	connect(this->ui.endCallButton, SIGNAL(clicked()), this, SLOT(endACall()));
 }
 
 Babel::~Babel()
@@ -64,21 +67,37 @@ void		Babel::login()
 void		Babel::appeler()
 {
 	this->_client.getSocket()->connectToHost(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
+
 }
 
 void		Babel::startCalling()
 {
+	QString	status(0);
+	QMessageBox::information(this, "Information", status.setNum(_client.getSocketStatus()));
 	QMessageBox::information(this, "Information", "You're Now Connected to the Client");
 	emit valueChanged(3);
 }
 
 void		Babel::startBinding()
 {
-	dynamic_cast<QUdpSocket*>(this->_client.getSocket())->bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
+	QUdpSocket* socket = reinterpret_cast<QUdpSocket *>(this->_client.getSocket());
+	if (socket == NULL)
+		QMessageBox::information(this, "Information", "Socket NULL");
+	if (socket->bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort()) == false)
+		QMessageBox::information(this, "Information", "Bind suce");
+	else
+		QMessageBox::information(this, "Information", "Binded");
+			
 }
 
 void		Babel::getStatusSocket()
 {
 	QString	status(0);
 	QMessageBox::information(this, "Information", status.setNum(_client.getSocketStatus()));
+}
+
+void		Babel::endACall()
+{
+	_client.disconnect();
+	emit valueChanged(2);
 }

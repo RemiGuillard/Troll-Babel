@@ -22,6 +22,7 @@ public slots:
 	void	startCalling();
 	void	startBinding();
 	void	getStatusSocket();
+	void	endACall();
 
 signals:
 	void	valueChanged(int);

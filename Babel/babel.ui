@@ -321,10 +321,17 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QPushButton" name="endCallButton">
           <property name="text">
            <string>Raccrocher</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="statButton">
+          <property name="text">
+           <string>Status</string>
           </property>
          </widget>
         </item>
