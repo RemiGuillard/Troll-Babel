@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include "AbsIOSound.h"
+#include "AbsIOSound.hpp"
 #include "portaudio.h"
 #include "PaIOSound.h"
 

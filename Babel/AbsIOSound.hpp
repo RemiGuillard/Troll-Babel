@@ -2,7 +2,7 @@
 # define	ABSIOSOUND_H
 
 #include <iostream>
-#include "AudioThread.h"
+#include "AudioThread.hpp"
 
 #define SAMPLE_RATE  (8000)
 #define FRAMES_PER_BUFFER (160)

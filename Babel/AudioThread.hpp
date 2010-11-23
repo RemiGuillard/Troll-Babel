@@ -2,19 +2,19 @@
 # define	AUDIOTHREAD_H
 
 #include <QThread>
-#include "AbsIOSound.h"
-#include "BNetwork.h"
+#include "AbsIOSound.hpp"
+#include "ABSNetwork.h"
 
-template <typename T>
+//template <typename T>
 class	AudioThread : public QThread
 {
 public:
 	void	run();
 private:
 	// remplacer &data par &AbsIOSound
-	IOStreamData<T>	&Data;
-	IOStreamData<T>	DataTmp;
-	BNetwork		&Net;
+	//IOStreamData<T>	&Data;
+	//IOStreamData<SAMPLE>	DataTmp;
+	ABSNetwork		&Net;
 };
 
 #endif	//	!AUDIOTHREAD_H

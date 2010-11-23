@@ -2,7 +2,7 @@
 # define	PAIOSOUND_H
 
 #include <iostream>
-#include "AbsIOSound.h"
+#include "AbsIOSound.hpp"
 #include "portaudio.h"
 
 /*#define PA_SAMPLE_TYPE  paFloat32

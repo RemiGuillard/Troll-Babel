@@ -1,5 +1,5 @@
 #include <iostream>
-#include "AbsIOSound.h"
+#include "AbsIOSound.hpp"
 
 /*template <typename T>
 AbsIOSound<T>::AbsIOSound() : _stream(NULL), _data.IAvailable(false), 

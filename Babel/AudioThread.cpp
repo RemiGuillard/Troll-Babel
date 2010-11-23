@@ -11,12 +11,12 @@ void	AudioThread<T>::run()
 		{
 			//encode data
 			//transfert de data.buf => pack.data
-			this->Net.packetSend();
+		//	this->Net.packetSend();
 			this->Data.IAvailable = false;
 		}
 		if (!this->DataTmp.OAvailable)
 		{
-			this->Net.packetRcv();
+		//	this->Net.packetRcv();
 			//decode pack.data
 			//transfert de pack.data => data.buf
 			this->Data.OAvailable = true;
