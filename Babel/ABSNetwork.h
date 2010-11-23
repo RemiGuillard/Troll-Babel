@@ -1,18 +1,18 @@
-#ifndef BNETWORK
-# define BNETWORK
+#ifndef ABSNETWORK
+# define ABSNETWORK
 
 #include <QString>
 #include <QAbstractSocket>
 
-class		BNetwork
+class		ABSNetwork
 {
 public:
-	BNetwork();
+	ABSNetwork();
 
-	virtual void		createSocket(QAbstractSocket::SocketType) = 0;
+	virtual void		createSocket() = 0;
 	virtual void		socketConnection(const QString &, quint16) = 0;
-	virtual void		packetRcv() = 0;
-	virtual void		packetSend() = 0;
+	virtual char*		packetRcv() = 0;
+	virtual void		packetSend(const char *) = 0;
 	virtual void		disconnect() = 0;
 
 	const bool&			getSocketStatus() const;
@@ -22,4 +22,4 @@ private:
 	bool				_sockState;
 };
 
-#endif // !BNETWORK
+#endif // !ABSNETWORK
