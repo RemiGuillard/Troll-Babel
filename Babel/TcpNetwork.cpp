@@ -26,13 +26,13 @@ char*		TcpNetwork::packetRcv()
 {
 	char	*data = new char[652];
 
-	//this->_sock->readData(data, 652);
+	_sock->read(data, 652);
 	return data;
 }
 
 void		TcpNetwork::packetSend(const char *data)
 {
-	//this->_sock->writeData(data, 652);
+	this->_sock->write(data, 652);
 }
 
 void		TcpNetwork::disconnect()
