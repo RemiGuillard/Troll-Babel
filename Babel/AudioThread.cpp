@@ -1,6 +1,6 @@
-#include "AudioThread.h"
+#include "AudioThread.hpp"
 //#include "Encoder.h"
-
+/*
 template <typename T>
 void	AudioThread<T>::run()
 {
@@ -23,4 +23,4 @@ void	AudioThread<T>::run()
 		}
 	}
 	return;
-}
+}*/
