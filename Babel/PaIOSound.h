@@ -20,7 +20,7 @@ public:
 	~PaIOSound();
 public:
 	virtual void recordVoice();
-	virtual void playVoice() {}
+	virtual void playVoice(const UdpNetwork&);
 	//virtual StopPlayRecord();
 	virtual IOStreamData<SAMPLE>	*getdata();
 };

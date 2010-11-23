@@ -22,6 +22,7 @@ public slots:
 	void	endACall();
 	void	dataReceived();
 	void	disconnectedFromServer();
+	void	sendData();
 
 signals:
 	void	valueChanged(int);

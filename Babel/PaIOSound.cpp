@@ -126,3 +126,8 @@ IOStreamData<SAMPLE>	*PaIOSound::getdata()
 {
 	return &this->_data;
 }
+
+void					PaIOSound::playVoice(const UdpNetwork &)
+{
+
+}

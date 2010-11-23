@@ -20,6 +20,9 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 
 	connect(this->ui.endCallButton, SIGNAL(clicked()), this, SLOT(endACall()));
 	connect(this->_client.getSocket(), SIGNAL(readyRead()), this, SLOT(dataReceived()));
+
+	/*Test d'envoi de donnée en Udp*/
+	connect(this->ui.sendDataButton, SIGNAL(clicked()), this, SLOT(sendData()));
 }
 
 Babel::~Babel()
@@ -63,15 +66,22 @@ void		Babel::appeler()
 	QUdpSocket* socket = reinterpret_cast<QUdpSocket *>(this->_client.getSocket());
 
 	if (socket->bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort(), QUdpSocket::ShareAddress) == false)
-		QMessageBox::information(this, "Information", "Bind suce");
+		QMessageBox::information(this, "Information", "Bind failed");
 	emit valueChanged(3);
-	
+	//Integrer ICI la partie sound Recording/Playing => QThread + PA
 }
 
 void		Babel::endACall()
 {
 	_client.disconnect();
 	emit valueChanged(2);
+}
+
+void		Babel::sendData()
+{
+	char*	buffer = "Coucou les copains";
+
+	reinterpret_cast<QUdpSocket*>(this->_client.getSocket())->writeDatagram(buffer, 19, QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
 }
 
 void		Babel::dataReceived()

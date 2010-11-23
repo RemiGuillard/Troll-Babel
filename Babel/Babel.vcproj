@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Babel"
 	ProjectGUID="{7AB3EE71-9485-4FF5-AD2C-9335E232B901}"
+	RootNamespace="Babel"
 	SccProjectName="&lt;Project Location In Database&gt;"
 	SccAuxPath="&lt;Source Control Database&gt;"
 	SccLocalPath="&lt;Local Binding Root of Project&gt;"
@@ -129,7 +130,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="qtmaind.lib QtCored4.lib QtGuid4.lib QtNetworkd4.lib D:\babel\Babel\lib\portaudio_x86.lib D:\babel\Babel\lib\libspeex.lib D:\babel\Babel\lib\libspeexdsp.lib"
+				AdditionalDependencies="qtmaind.lib QtCored4.lib QtGuid4.lib QtNetworkd4.lib $(InputDir)lib\portaudio_x86.lib $(InputDir)lib\libspeex.lib $(InputDir)lib\libspeexdsp.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				AdditionalLibraryDirectories="$(QTDIR)\lib"
 				GenerateDebugInformation="true"
