@@ -14,7 +14,11 @@ public:
 	AudioThread(UdpNetwork &net) : Net(net) {}
 	//Instanciation explicite!!!!!!
 public:
-	//void	setIOSound(AbsIOSound<T> *);
+	void	setIOSound(AbsIOSound<T> *obj)
+	{
+		this->IOSound = obj;
+	}
+	//////////////////////
 	template <typename A>
 	void	setBuf(A *dest, A *from)
 	{

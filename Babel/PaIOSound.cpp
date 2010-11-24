@@ -136,6 +136,6 @@ void PaIOSound::playVoice(UdpNetwork &Net)
 {
 	AudioThread<SAMPLE>	th(Net);
 
-	//th.setIOSound(this);
-	//this->recordVoice();
+	th.setIOSound(this);
+	this->recordVoice();
 }
