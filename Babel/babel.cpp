@@ -107,6 +107,9 @@ void		Babel::bindMyPort()
 {
 	QUdpSocket& socket = static_cast<QUdpSocket&>(this->_client.getSocket());
 
-	if (socket.bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort()) == false)
-		QMessageBox::information(this, "Information", "Bind failed");
+	if (socket.bind(/*QHostAddress(this->ui.IpClientLine->text()),*/ this->ui.PortClientLine->text().toUShort()) == false)
+	{
+		QMessageBox::information(this, "Information", socket.errorString());
+
+	}
 }
