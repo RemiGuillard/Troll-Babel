@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include "IOStreamData.hpp"
+#include "Encoder.h"
 #include "UdpNetwork.h"
+
 
 #define SAMPLE_RATE  (8000)
 #define NUM_CHANNELS    (2)
@@ -19,12 +21,14 @@ public:
 public:
 	virtual void recordVoice() = 0;
 	//virtual stopRecord() = 0;
-	virtual void playVoice(const UdpNetwork&) = 0;
+	virtual void playVoice(UdpNetwork &) = 0;
 	//virtual StopPlay() = 0;
 	virtual IOStreamData<T>	*getdata() = 0;
+	virtual	Encoder			&getEncode() = 0;
 protected:
 	IOStream		*_stream;
 	IOStreamData<T>	_data;
+	Encoder			enc;
 };
 
 #endif	//	!ABSIOSOUND_H

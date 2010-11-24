@@ -12,10 +12,10 @@ PaIOSound::PaIOSound()/*: AbsIOSound<SAMPLE>()*/
 	if(_err != paNoError)
 		throw "construction fail";
 	this->_data.IAvailable = false;
-	this->_data.IFrameIndex = 0;
+	//this->_data.IFrameIndex = 0;
 	this->_data.IMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
 	this->_data.OAvailable = false;
-	this->_data.OFrameIndex = 0;
+	//this->_data.OFrameIndex = 0;
 	this->_data.OMaxFrameIndex = 0;
 	this->_data.ThreadEnd = 1;
 	std::cout << "object created" << std::endl;
@@ -127,7 +127,15 @@ IOStreamData<SAMPLE>	*PaIOSound::getdata()
 	return &this->_data;
 }
 
-void					PaIOSound::playVoice(const UdpNetwork &)
+Encoder		&PaIOSound::getEncode()
 {
+	return this->enc;
+}
 
+void PaIOSound::playVoice(UdpNetwork &Net)
+{
+	AudioThread<SAMPLE>	th(Net);
+
+	//th.setIOSound(this);
+	//this->recordVoice();
 }

@@ -4,6 +4,8 @@
 #include <iostream>
 #include "AbsIOSound.hpp"
 #include "portaudio.h"
+#include "AudioThread.hpp"
+
 
 /*#define PA_SAMPLE_TYPE  paFloat32
 #define SAMPLE_SILENCE  (0.0f)
@@ -20,9 +22,10 @@ public:
 	~PaIOSound();
 public:
 	virtual void recordVoice();
-	virtual void playVoice(const UdpNetwork&);
+	virtual void playVoice(UdpNetwork &);
 	//virtual StopPlayRecord();
 	virtual IOStreamData<SAMPLE>	*getdata();
+	virtual	Encoder					&getEncode();
 };
 
 #endif	//	!PAIOSOUND_H
