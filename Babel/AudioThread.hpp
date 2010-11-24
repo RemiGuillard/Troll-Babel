@@ -34,7 +34,7 @@ public:
 ///////////////////////////////////////////
 	void	run()
 	{
-		QUdpSocket	*socket = dynamic_cast<QUdpSocket *>(this->Net.getSocket());
+		QUdpSocket	*socket = dynamic_cast<QUdpSocket *>(&this->Net.getSocket());
 		while (this->IOSound->getdata()->ThreadEnd)
 		{
 			this->setData(this->DataTmp, this->IOSound->getdata());
