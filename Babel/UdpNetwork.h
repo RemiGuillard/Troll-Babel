@@ -16,16 +16,16 @@ private:
 	UdpNetwork&			operator=(const UdpNetwork &);
 
 public:
-	void				createSocket();
-	void				socketConnection(const QString &, quint16);
-	char*				packetRcv();
-	void				packetSend(const char *);
-	void				disconnect();
+	void					createSocket();
+	void					socketConnection(const QString &, quint16);
+	char*					packetRcv();
+	void					packetSend(const char *);
+	void					disconnect();
 
-	QAbstractSocket*	getSocket() const;
+	QAbstractSocket&	getSocket();
 
 private:
-	QUdpSocket*			_sock;
+	QUdpSocket			_sock;
 	QString				_ip;
 	quint16				_port;
 };

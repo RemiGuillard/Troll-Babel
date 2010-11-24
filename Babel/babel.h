@@ -15,17 +15,18 @@ public:
 	~Babel();
 
 public slots:
-	void	changerPage();
-	void	connectToServer();
-	void	login();
-	void	appeler();
-	void	endACall();
-	void	dataReceived();
-	void	disconnectedFromServer();
-	void	sendData();
+	void			changerPage();
+	void			connectToServer();
+	void			login();
+	void			appeler();
+	void			endACall();
+	void			dataReceived();
+	void			disconnectedFromServer();
+	void			sendData();
+	void			bindMyPort();
 
 signals:
-	void	valueChanged(int);
+	void			valueChanged(int);
 
 private:
 	Ui::BabelClass	ui;

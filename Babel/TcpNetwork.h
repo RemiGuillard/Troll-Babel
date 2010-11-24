@@ -16,16 +16,16 @@ private:
 	TcpNetwork&			operator=(const TcpNetwork &);
 
 public:
-	void				createSocket();
-	void				socketConnection(const QString &, quint16);
-	char*				packetRcv();
-	void				packetSend(const char *);
-	void				disconnect();
+	void					createSocket();
+	void					socketConnection(const QString &, quint16);
+	char*					packetRcv();
+	void					packetSend(const char *);
+	void					disconnect();
 
-	QAbstractSocket*	getSocket() const;
+	const QAbstractSocket&	getSocket() const;
 
 private:
-	QTcpSocket*			_sock;
+	QTcpSocket			_sock;
 	QString				_ip;
 	quint16				_port;
 };
