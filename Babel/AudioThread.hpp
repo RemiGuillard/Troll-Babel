@@ -53,8 +53,8 @@ public:
 			}
 			if (!this->DataTmp.OAvailable)
 			{
-				if (socket->waitForReadyRead(10))
-				{	
+			//	if (socket->waitForReadyRead(10))
+			//	{	
 					int i;
 					DataClientPack	*rcv;
 					rcv = reinterpret_cast<DataClientPack*>(Net.packetRcv());
@@ -63,7 +63,7 @@ public:
 					this->IOSound->getdata()->OMaxFrameIndex = rcv->dataLenght / NUM_CHANNELS;
 					this->setBuf(this->IOSound->getdata()->OBuf, output);				
 					this->IOSound->getdata()->OAvailable = true;
-				}
+			//	}
 			}
 		}
 		return ;
