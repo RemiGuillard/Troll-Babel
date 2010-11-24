@@ -40,7 +40,7 @@ public:
 	void	run()
 	{
 		QUdpSocket	*socket = dynamic_cast<QUdpSocket *>(&this->Net.getSocket());
-		while (this->IOSound->getdata()->ThreadEnd)
+		while (1)//this->IOSound->getdata()->ThreadEnd)
 		{
 			this->setData(this->DataTmp, this->IOSound->getdata());
 			if (this->DataTmp.IAvailable)
@@ -53,21 +53,21 @@ public:
 				this->IOSound->getdata()->IAvailable = false;
 			}
 							//QMessageBox::information(NULL, "test", "test");
-			if (!this->DataTmp.OAvailable)
+/*			if (!this->DataTmp.OAvailable)
 			{
-			//	if (socket->waitForReadyRead(10))
-			//	{	
+				if (socket->waitForReadyRead(10))
+				{	
 					int i;
 					DataClientPack	*rcv;
 					rcv = reinterpret_cast<DataClientPack*>(Net.packetRcv());
 					SAMPLE output[FRAMES_PER_BUFFER];
 					this->IOSound->getEncode().decode(rcv->data, output);
-					this->IOSound->getdata()->OMaxFrameIndex = rcv->dataLenght / NUM_CHANNELS;
+					this->IOSound->getdata()->OMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
 					this->setBuf(this->IOSound->getdata()->OBuf, output);				
 					this->IOSound->getdata()->OAvailable = true;
-			//	}
-			}
-		}
+				}
+			}*/
+	}
 		return ;
 	}
 private:

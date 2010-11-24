@@ -66,14 +66,12 @@ void		Babel::login()
 
 void		Babel::appeler()
 {
-	AbsIOSound<SAMPLE>*	IOSound = new PaIOSound;
-//	QUdpSocket& socket = static_cast<QUdpSocket&>(this->_client.getSocket());
-
-//	if (socket.bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort()) == false)
-//		QMessageBox::information(this, "Information", "Bind failed");
 	emit valueChanged(3);
+
+	this->_IOSound = new PaIOSound;
+
 	//Integrer ICI la partie sound Recording/Playing => QThread + PA
-	IOSound->playVoice(this->_client);
+	this->_IOSound->playVoice(this->_client);
 }
 
 void		Babel::endACall()
@@ -91,10 +89,30 @@ void		Babel::sendData()
 
 void		Babel::dataReceived()
 {
-	char	buffer[512];
+/*	char	buffer[512];
 	buffer[static_cast<QUdpSocket&>(this->_client.getSocket()).readDatagram(buffer, 512)] = '\0';
 	QString	toto = buffer;
-	QMessageBox::information(this, "Data Received", toto);
+	QMessageBox::information(this, "Data Received", toto);*/
+
+	
+	int i;
+	DataClientPack	*rcv;
+	rcv = reinterpret_cast<DataClientPack*>(this->_client.packetRcv());
+	SAMPLE output[FRAMES_PER_BUFFER];
+
+	this->_IOSound->getEncode().decode(rcv->data, output);
+	this->_IOSound->getdata()->OMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
+
+	//this->setBuf(this->_IOSound->getdata()->OBuf, output);
+	int a = 0;
+	while (a < FRAMES_PER_BUFFER)
+	{
+		this->_IOSound->getdata()->OBuf[a] = output[a];
+		a++;
+	}
+
+	this->_IOSound->getdata()->OAvailable = true;
+
 }
 
 void		Babel::disconnectedFromServer()

@@ -5,6 +5,8 @@
 #include "ui_babel.h"
 #include "UdpNetwork.h"
 #include "TcpNetwork.h"
+#include "AbsIOSound.hpp"
+#include "PaIOSound.h"
 
 class Babel : public QMainWindow
 {
@@ -32,6 +34,7 @@ private:
 	Ui::BabelClass	ui;
 	TcpNetwork		_server;
 	UdpNetwork		_client;
+	AbsIOSound<SAMPLE>* _IOSound;
 };
 
 #endif // BABEL_H
