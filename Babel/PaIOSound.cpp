@@ -138,4 +138,5 @@ void PaIOSound::playVoice(UdpNetwork &Net)
 
 	th.setIOSound(this);
 	this->recordVoice();
+	th.run();
 }

@@ -6,6 +6,7 @@
 #include "AbsIOSound.hpp"
 #include "UdpNetwork.h"
 #include "DataClientPack.h"
+#include <QMessageBox>
 
 template <typename T>
 class	AudioThread : public QThread
@@ -51,6 +52,7 @@ public:
 				Net.packetSend(reinterpret_cast<char*>(&send));
 				this->IOSound->getdata()->IAvailable = false;
 			}
+							//QMessageBox::information(NULL, "test", "test");
 			if (!this->DataTmp.OAvailable)
 			{
 			//	if (socket->waitForReadyRead(10))
