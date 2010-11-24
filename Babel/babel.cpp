@@ -1,6 +1,9 @@
 #include <QMessageBox>
-#include "babel.h"
 #include <String>
+
+#include "PaIOSound.h"
+#include "AbsIOSound.hpp"
+#include "babel.h"
 
 Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
@@ -63,12 +66,14 @@ void		Babel::login()
 
 void		Babel::appeler()
 {
+	AbsIOSound<SAMPLE>*	IOSound = new PaIOSound;
 //	QUdpSocket& socket = static_cast<QUdpSocket&>(this->_client.getSocket());
 
 //	if (socket.bind(QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort()) == false)
 //		QMessageBox::information(this, "Information", "Bind failed");
 	emit valueChanged(3);
 	//Integrer ICI la partie sound Recording/Playing => QThread + PA
+	IOSound->playVoice(this->_client);
 }
 
 void		Babel::endACall()
@@ -94,6 +99,7 @@ void		Babel::dataReceived()
 
 void		Babel::disconnectedFromServer()
 {
+	this->_client.disconnect();
 	QMessageBox::information(this, "Server information", "You've been disconnected form the server");
 }
 
