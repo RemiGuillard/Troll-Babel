@@ -11,7 +11,7 @@ public:
 	UdpNetwork();
 	~UdpNetwork();
 
-private:
+
 	UdpNetwork(const UdpNetwork &);
 	UdpNetwork&			operator=(const UdpNetwork &);
 

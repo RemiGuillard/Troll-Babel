@@ -12,7 +12,7 @@
  
 
 template <typename T>
-class           AbsIOSound// : public QObject
+class           AbsIOSound
 {
 public:
         typedef void* IOStream;

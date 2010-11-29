@@ -22,7 +22,7 @@ public slots:
 	void			login();
 	void			appeler();
 //	void			endACall();
-//	void			dataReceived();
+	void			dataReceived();
 //	void			disconnectedFromServer();
 //	void			sendData();
 //	void			bindMyPort();

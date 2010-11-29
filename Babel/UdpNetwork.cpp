@@ -14,7 +14,7 @@ void					UdpNetwork::createSocket() { }
 
 void					UdpNetwork::socketConnection(const QString & hostName, quint16 port)
 {
-	_sock.bind(QHostAddress(hostName), port);
+	_sock.bind(port);
 	this->_ip = hostName;
 	this->_port = port;
 }

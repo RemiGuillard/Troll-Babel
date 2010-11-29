@@ -62,9 +62,9 @@ int PaRecordCallback(const void *input, void *output,
 		}
 	//	data->IAvailable = true;
 		//emit dataAvailable(*data);
-	//}
-//	if (data->OAvailable)
-//	{
+//	}
+	if (data->OAvailable)
+	{
 		SAMPLE *woptr = static_cast<SAMPLE *>(output);
 		const SAMPLE *roptr = data->OBuf;
 		framesToCalc = data->OMaxFrameIndex;
@@ -73,8 +73,8 @@ int PaRecordCallback(const void *input, void *output,
 			*woptr++ = *roptr++;  /* left */
 			if( NUM_CHANNELS == 2 ) *woptr++ = *roptr++;  /* right */
 		}
-	//	data->OAvailable = false;
-	//}
+		data->OAvailable = false;
+	}
 	//data->mutex.unlock(); 
 	return 0;
 }
@@ -158,5 +158,5 @@ void PaIOSound::playVoice()
 	//th.setIOSound(this);
 	th->start();     
 	this->recordVoice();
-	//      QMessageBox::information(NULL, "test", "test");
+	//QMessageBox::information(NULL, "test", QString(this->_data.aff));
 }

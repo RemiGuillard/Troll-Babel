@@ -277,7 +277,11 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLineEdit" name="IpClientLine"/>
+         <widget class="QLineEdit" name="IpClientLine">
+          <property name="text">
+           <string>localhost</string>
+          </property>
+         </widget>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="PortClientLabel">
@@ -287,19 +291,16 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QLineEdit" name="PortClientLine"/>
-        </item>
-        <item row="5" column="0">
-         <widget class="QPushButton" name="callButton">
+         <widget class="QLineEdit" name="PortClientLine">
           <property name="text">
-           <string>Appeler</string>
+           <string>20705</string>
           </property>
          </widget>
         </item>
         <item row="4" column="0">
-         <widget class="QPushButton" name="bindButton">
+         <widget class="QPushButton" name="callButton">
           <property name="text">
-           <string>Bind</string>
+           <string>Appeler</string>
           </property>
          </widget>
         </item>
@@ -314,17 +315,10 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="1" column="0">
          <widget class="QPushButton" name="endCallButton">
           <property name="text">
            <string>Raccrocher</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="sendDataButton">
-          <property name="text">
-           <string>Send Data</string>
           </property>
          </widget>
         </item>
