@@ -21,27 +21,31 @@ Encoder::~Encoder()
 }
 
 
-void	Encoder::encode(short *input, char *output)
+void		Encoder::encode(ABSdecoded input, ABSencoded output)
 {
-	int nbBytes;
-	int	size;
-	int	i = 0;
+	int		nbBytes;
+	int		size;
+	int		i = 0;
 	float	in[INPUT_SIZE];
 
+	char	*output2 = static_cast<char *>(output);
+	short	*input2 = static_cast<short *>(input);
 	while(i < INPUT_SIZE)
-		in[i] = input[i++];
+		in[i] = input2[i++];
 
 	speex_bits_reset(&this->ebits);
 	speex_encode(this->enc_state, in, &this->ebits);
 	size = speex_bits_nbytes(&this->ebits);
-	nbBytes = speex_bits_write(&this->ebits, output, size);
+	nbBytes = speex_bits_write(&this->ebits, output2, size);
 }
 
-void	Encoder::decode(char *input, short *output)
+void	Encoder::decode(ABSencoded input, ABSdecoded output)
 {
 	int frame_size;
 
-    speex_bits_read_from(&dbits, input, INPUT_SIZE);
+	char	*input2 = static_cast<char *>(input);
+	short	*output2 = static_cast<short *>(output);
+    speex_bits_read_from(&dbits, input2, INPUT_SIZE);
     speex_decoder_ctl(dec_state, SPEEX_GET_FRAME_SIZE, &frame_size);
-    speex_decode_int(dec_state, &dbits, output);
+    speex_decode_int(dec_state, &dbits, output2);
 }
