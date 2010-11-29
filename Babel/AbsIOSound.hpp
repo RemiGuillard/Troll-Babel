@@ -1,5 +1,5 @@
-#ifndef		ABSIOSOUND_H
-# define	ABSIOSOUND_H
+#ifndef         ABSIOSOUND_H
+# define        ABSIOSOUND_H
 
 #include <iostream>
 #include "IOStreamData.hpp"
@@ -12,23 +12,23 @@
  
 
 template <typename T>
-class		AbsIOSound
+class           AbsIOSound// : public QObject
 {
 public:
-	typedef void* IOStream;
-	/*AbsIOSound() {}
-	~AbsIOSound() {}*/
+        typedef void* IOStream;
+        /*AbsIOSound() {}
+        ~AbsIOSound() {}*/
 public:
-	virtual void recordVoice() = 0;
-	//virtual stopRecord() = 0;
-	virtual void playVoice(UdpNetwork &) = 0;
-	//virtual StopPlay() = 0;
-	virtual IOStreamData<T>	*getdata() = 0;
-	virtual	Encoder			&getEncode() = 0;
+        virtual void recordVoice() = 0;
+        //virtual stopRecord() = 0;
+        virtual void playVoice() = 0;
+        //virtual StopPlay() = 0;
+        virtual IOStreamData<T> *getdata() = 0;
+        virtual Encoder                 &getEncode() = 0;
 protected:
-	IOStream		*_stream;
-	IOStreamData<T>	_data;
-	Encoder			enc;
+        IOStream                *_stream;
+        IOStreamData<T> _data;
+        Encoder                 enc;
 };
 
-#endif	//	!ABSIOSOUND_H
+#endif  //      !ABSIOSOUND_H

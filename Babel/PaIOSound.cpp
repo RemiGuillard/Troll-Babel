@@ -5,9 +5,9 @@
 #include "portaudio.h"
 #include "PaIOSound.h"
 
-PaIOSound::PaIOSound()/*: AbsIOSound<SAMPLE>()*/
+PaIOSound::PaIOSound()
 {
-	PaError	_err;
+	PaError _err;
 	_err = Pa_Initialize();
 	if(_err != paNoError)
 		throw "construction fail";
@@ -17,7 +17,7 @@ PaIOSound::PaIOSound()/*: AbsIOSound<SAMPLE>()*/
 	this->_data.OAvailable = false;
 	//this->_data.OFrameIndex = 0;
 	this->_data.OMaxFrameIndex = 0;
-	this->_data.ThreadEnd = 1;
+	this->_data.ThreadEnd = true;
 	std::cout << "object created" << std::endl;
 }
 
@@ -47,23 +47,24 @@ int PaRecordCallback(const void *input, void *output,
 					 void *userData)
 {
 	IOStreamData<SAMPLE> *data = static_cast<IOStreamData<SAMPLE> *>(userData);
+	//data->mutex.lock();   
 	const SAMPLE *riptr = static_cast<const SAMPLE *>(input);
 	SAMPLE *wiptr = data->IBuf;
 	unsigned long framesToCalc, i;
 	framesToCalc = frameCount;
-	for(i=0; i<framesToCalc; i++)
-	{
-		*(wiptr++) = *(riptr++);  /* left */
-		if( NUM_CHANNELS == 2 ) *(wiptr++) = *(riptr++);  /* right */
-	}
-	/*Encoder		*encode = new Encoder(8);
-	encode->encode(data->IBuf, data->encode);
-	encode->decode(data->encode, data->OBuf);*/
-	/*data->OBuf = data->IBuf;
-	data->OMaxFrameIndex = 160 /2;
-	data->OAvailable = true;*/
-	if (data->OAvailable)
-	{
+
+	//if (!data->IAvailable)
+	//{
+		for(i=0; i<framesToCalc; i++)
+		{
+			*(wiptr++) = *(riptr++);  /* left */
+			if( NUM_CHANNELS == 2 ) *(wiptr++) = *(riptr++);  /* right */
+		}
+	//	data->IAvailable = true;
+		//emit dataAvailable(*data);
+	//}
+//	if (data->OAvailable)
+//	{
 		SAMPLE *woptr = static_cast<SAMPLE *>(output);
 		const SAMPLE *roptr = data->OBuf;
 		framesToCalc = data->OMaxFrameIndex;
@@ -72,9 +73,9 @@ int PaRecordCallback(const void *input, void *output,
 			*woptr++ = *roptr++;  /* left */
 			if( NUM_CHANNELS == 2 ) *woptr++ = *roptr++;  /* right */
 		}
-		data->OAvailable = false;
-	}
-	data->IAvailable = true;
+	//	data->OAvailable = false;
+	//}
+	//data->mutex.unlock(); 
 	return 0;
 }
 
@@ -96,7 +97,7 @@ if (NUM_CHANNELS == 2) *(wiptr++) = *(riptr++);
 return 0;
 }*/
 
-void	PaIOSound::recordVoice()
+void    PaIOSound::recordVoice()
 {
 	PaError _err;
 	std::cout << "before opening" << std::endl;
@@ -122,21 +123,40 @@ void	PaIOSound::recordVoice()
 }
 
 //template <typename T>
-IOStreamData<SAMPLE>	*PaIOSound::getdata()
+IOStreamData<SAMPLE>    *PaIOSound::getdata()
 {
 	return &this->_data;
 }
 
-Encoder		&PaIOSound::getEncode()
+Encoder         &PaIOSound::getEncode()
 {
 	return this->enc;
 }
 
-void PaIOSound::playVoice(UdpNetwork &Net)
+/*void  PaIOSound::writeDataToNetwork(IOStreamData<SAMPLE> data)
 {
-	AudioThread<SAMPLE>	th(Net);
+if (data.IAvailable)
+{
+Encoder enc;
+enc.encode(data.IBuf, data.encoded);
+DataClientPack  send;
+send.dataLenght = FRAMES_PER_BUFFER;
+//      this->setBuf(send.data, this->DataTmp.encoded);
+int i;
+for(i=0;i<FRAMES_PER_BUFFER;i++)
+send.data[i] = data.encoded[i];
+data.Net->packetSend(reinterpret_cast<char*>(&send));
+this->_data.IAvailable = false;
+}
+}*/
 
-	th.setIOSound(this);
+void PaIOSound::playVoice()
+{
+	AudioThread<SAMPLE>     *th = new AudioThread<SAMPLE>("127.0.0.1", 20705, &this->_data);
+	//AudioThread<SAMPLE>   th(Net, this->_data);
+
+	//th.setIOSound(this);
+	th->start();     
 	this->recordVoice();
-	th.start();
+	//      QMessageBox::information(NULL, "test", "test");
 }

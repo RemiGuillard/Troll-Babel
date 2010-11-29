@@ -21,11 +21,11 @@ public slots:
 	void			connectToServer();
 	void			login();
 	void			appeler();
-	void			endACall();
-	void			dataReceived();
-	void			disconnectedFromServer();
-	void			sendData();
-	void			bindMyPort();
+//	void			endACall();
+//	void			dataReceived();
+//	void			disconnectedFromServer();
+//	void			sendData();
+//	void			bindMyPort();
 
 signals:
 	void			valueChanged(int);
