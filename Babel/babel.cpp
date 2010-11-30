@@ -12,11 +12,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	_server.createSocket();
 	_client.createSocket();
 
-	this->_IOSound = new PaIOSound(); //(remplacer par singleton)
-	/*connect(dynamic_cast<PaIOSound *>(this->_IOSound),
-	SIGNAL(dataAvailable(IOStreamData<SAMPLE> data)),
-	dynamic_cast<PaIOSound *>(this->_IOSound), SLOT(writeDataToNetwork(IOStreamData<SAMPLE> data)));*/
-
+	this->_IOSound = new PaIOSound(); 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
 	connect(&(this->_server.getSocket()), SIGNAL(connected()), this, SLOT(changerPage()));
@@ -72,18 +68,8 @@ void            Babel::login()
 void            Babel::appeler()
 {
 	emit valueChanged(3);
-
-	//Integrer ICI la partie sound Recording/Playing => QThread + PA
-	/*QUdpSocket& socket = static_cast<QUdpSocket&>(this->_client.getSocket());
-
-	if (socket.bind(this->ui.PortClientLine->text().toUShort()) == false)
-	{
-		QMessageBox::information(this, "Information", socket.errorString());
-	}*/
 	this->_client.socketConnection(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
 	this->_IOSound->playVoice(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
-	//th.start();
-	//this->_IOSound->recordVoice();
 }                                                                                                                                                                                                                                          
 
 /*void            Babel::endACall()
@@ -101,29 +87,13 @@ static_cast<QUdpSocket&>(this->_client.getSocket()).writeDatagram(buffer, 19, QH
 
 void            Babel::dataReceived()
 {
-/*char    buffer[512];
-	buffer[static_cast<QUdpSocket&>(this->_client.getSocket()).readDatagram(buffer, 512)] = '\0';
-	QString toto = buffer;*/
-	//QMessageBox::information(this, "Data Received", "Lolol");
-
-
 	DataClientPack  *rcv;
 	rcv = reinterpret_cast<DataClientPack*>(this->_client.packetRcv());
 	SAMPLE output[FRAMES_PER_BUFFER];
 
 	this->_IOSound->getEncode().decode(rcv->data, output);
 	this->_IOSound->getdata()->OMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
-
 	this->_IOSound->getdata()->OBuf->writeBlock(output, FRAMES_PER_BUFFER);
-	//this->setBuf(this->_IOSound->getdata()->OBuf, output);
-	/*int a = 0;
-	while (a < FRAMES_PER_BUFFER)
-	{
-		this->_IOSound->getdata()->OBuf[a] = output[a];
-		a++;
-	}*/
-	//this->_IOSound->getdata()->OAvailable = true;
-
 }
 
 /*void            Babel::disconnectedFromServer()

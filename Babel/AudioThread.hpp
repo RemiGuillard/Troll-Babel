@@ -16,13 +16,8 @@ public:
 	AudioThread(QString ip, quint16 port, IOStreamData<T> *Data) : data(Data)
 	{
 		this->net.socketConnection(ip, port);
-	/*	QUdpSocket& socket = static_cast<QUdpSocket&>(this->net.getSocket());
-		socket.bind(port);
-		this->net.socketConnection(ip, port);*/
 	}
-	//Instanciation explicite!!!!!!
 public:
-	//void  setIOSound(AbsIOSound<T> *);
 	template <typename A>
 	void    setBuf(A *dest, A *from)
 	{
@@ -30,6 +25,7 @@ public:
 		for (i = 0 ; i < FRAMES_PER_BUFFER ; i++)
 			dest[i] = from[i];
 	}
+
 	/////////////////////////////////////////
 	void    setData(IOStreamData<T> &Data, IOStreamData<T> *obj)
 	{
@@ -44,9 +40,6 @@ public:
 	{
 		while (this->data->ThreadEnd)
 		{
-			//this->setData(this->DataTmp, this->data);
-		//if (this->DataTmp.IAvailable)
-		//{
 				T	tmp[160];
 				data->IBuf->readBlock(tmp, 160);
 				this->enc.encode(tmp, this->data->encoded);
@@ -54,21 +47,6 @@ public:
 				send.dataLenght = FRAMES_PER_BUFFER;
 				this->setBuf(send.data, this->data->encoded);
 				this->net.packetSend(reinterpret_cast<char*>(&send));
-			//this->data->IAvailable = false;
-		//}
-		/*if (!this->DataTmp.OAvailable)
-			{
-				if (this->net.getSocket().waitForReadyRead(10))
-				{     
-					DataClientPack  *rcv;
-					rcv = reinterpret_cast<DataClientPack*>(this->net.packetRcv());
-					SAMPLE output[FRAMES_PER_BUFFER];
-					this->enc.decode(rcv->data, output);
-					this->data->OMaxFrameIndex = rcv->dataLenght / NUM_CHANNELS;
-					this->setBuf(this->data->OBuf, output);                         
-					this->data->OAvailable = true;
-				}
-			}*/
 		}
 		/*this->net.disconnect();*/
 		return ;
@@ -76,7 +54,6 @@ public:
 private:
 	IOStreamData<T> *data;
 	UdpNetwork      net;    
-	//IOStreamData<T> DataTmp;
 	Encoder enc;
 };
 

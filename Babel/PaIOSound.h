@@ -27,13 +27,6 @@ public:
 	//virtual StopPlayRecord();
 	virtual IOStreamData<SAMPLE>    *getdata();
 	virtual Encoder                 &getEncode();
-	/*      template <typename A>
-	void    setBuf(A *dest, A *from)
-	{
-	int i;
-	for (i=0;i<FRAMES_PER_BUFFER;i++)
-	dest[i] = from[i];
-	}*/	
 };
 
 #endif  //      !PAIOSOUND_H
