@@ -23,7 +23,7 @@ public:
 	~PaIOSound();
 public:
 	virtual void recordVoice();
-	virtual void playVoice();
+	virtual void playVoice(QString ip, quint16 port);
 	//virtual StopPlayRecord();
 	virtual IOStreamData<SAMPLE>    *getdata();
 	virtual Encoder                 &getEncode();

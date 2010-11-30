@@ -25,7 +25,7 @@ public:
 		return (emptyFlag > 0);
 	}
 
-	void	writeBlock(T *input, int size)
+	void	writeBlock(const T *input, int size)
 	{
 		if (size >= buffSize - wptr - 1)
 		{
@@ -58,7 +58,7 @@ public:
 		this->emptyFlag--;
 	}
 
-	void	copy(T *dest, T *src, int size)
+	void	copy(T *dest, const T *src, int size)
 	{
 		int	i = 0;
 		while(i < size)

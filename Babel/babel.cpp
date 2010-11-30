@@ -81,7 +81,7 @@ void            Babel::appeler()
 		QMessageBox::information(this, "Information", socket.errorString());
 	}*/
 	this->_client.socketConnection(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
-	this->_IOSound->playVoice();
+	this->_IOSound->playVoice(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
 	//th.start();
 	//this->_IOSound->recordVoice();
 }                                                                                                                                                                                                                                          
@@ -114,14 +114,15 @@ void            Babel::dataReceived()
 	this->_IOSound->getEncode().decode(rcv->data, output);
 	this->_IOSound->getdata()->OMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
 
+	this->_IOSound->getdata()->OBuf->writeBlock(output, FRAMES_PER_BUFFER);
 	//this->setBuf(this->_IOSound->getdata()->OBuf, output);
-	int a = 0;
+	/*int a = 0;
 	while (a < FRAMES_PER_BUFFER)
 	{
 		this->_IOSound->getdata()->OBuf[a] = output[a];
 		a++;
-	}
-	this->_IOSound->getdata()->OAvailable = true;
+	}*/
+	//this->_IOSound->getdata()->OAvailable = true;
 
 }
 

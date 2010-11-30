@@ -44,13 +44,15 @@ public:
 	{
 		while (this->data->ThreadEnd)
 		{
-			this->setData(this->DataTmp, this->data);
+			//this->setData(this->DataTmp, this->data);
 		//if (this->DataTmp.IAvailable)
 		//{
-				this->enc.encode(this->DataTmp.IBuf, this->DataTmp.encoded);
+				T	tmp[160];
+				data->IBuf->readBlock(tmp, 160);
+				this->enc.encode(tmp, this->data->encoded);
 				DataClientPack  send;
 				send.dataLenght = FRAMES_PER_BUFFER;
-				this->setBuf(send.data, this->DataTmp.encoded);
+				this->setBuf(send.data, this->data->encoded);
 				this->net.packetSend(reinterpret_cast<char*>(&send));
 			//this->data->IAvailable = false;
 		//}
@@ -74,7 +76,7 @@ public:
 private:
 	IOStreamData<T> *data;
 	UdpNetwork      net;    
-	IOStreamData<T> DataTmp;
+	//IOStreamData<T> DataTmp;
 	Encoder enc;
 };
 

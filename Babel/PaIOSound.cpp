@@ -11,6 +11,8 @@ PaIOSound::PaIOSound()
 	_err = Pa_Initialize();
 	if(_err != paNoError)
 		throw "construction fail";
+	this->_data.IBuf = new BabelBuffer<SAMPLE>(4096);
+	this->_data.OBuf = new BabelBuffer<SAMPLE>(4096);
 	this->_data.IAvailable = false;
 	//this->_data.IFrameIndex = 0;
 	this->_data.IMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
@@ -49,32 +51,38 @@ int PaRecordCallback(const void *input, void *output,
 	IOStreamData<SAMPLE> *data = static_cast<IOStreamData<SAMPLE> *>(userData);
 	//data->mutex.lock();   
 	const SAMPLE *riptr = static_cast<const SAMPLE *>(input);
-	SAMPLE *wiptr = data->IBuf;
+	//SAMPLE *wiptr = data->IBuf;
 	unsigned long framesToCalc, i;
 	framesToCalc = frameCount;
 
 	//if (!data->IAvailable)
 	//{
-		for(i=0; i<framesToCalc; i++)
-		{
-			*(wiptr++) = *(riptr++);  /* left */
-			if( NUM_CHANNELS == 2 ) *(wiptr++) = *(riptr++);  /* right */
-		}
-	//	data->IAvailable = true;
-		//emit dataAvailable(*data);
-//	}
-	if (data->OAvailable)
+	data->IBuf->writeBlock(riptr, 160);
+		
+	/*for(i=0; i<framesToCalc; i++)
 	{
-		SAMPLE *woptr = static_cast<SAMPLE *>(output);
-		const SAMPLE *roptr = data->OBuf;
-		framesToCalc = data->OMaxFrameIndex;
-		for(i=0; i<framesToCalc; i++)
-		{
-			*woptr++ = *roptr++;  /* left */
-			if( NUM_CHANNELS == 2 ) *woptr++ = *roptr++;  /* right */
-		}
-		data->OAvailable = false;
-	}
+	*(wiptr++) = *(riptr++);  // left 
+	if( NUM_CHANNELS == 2 ) *(wiptr++) = *(riptr++);  // right 
+	}*/
+
+	//	data->IAvailable = true;
+	//emit dataAvailable(*data);
+	//	}
+	//if (data->OAvailable)
+	//{
+	SAMPLE *woptr = static_cast<SAMPLE *>(output);
+	//const SAMPLE *roptr = data->OBuf;
+	framesToCalc = data->OMaxFrameIndex;
+	
+	data->OBuf->readBlock(woptr, 160);
+	
+	/*for(i=0; i<framesToCalc; i++)
+	{
+		*woptr++ = *roptr++;  // left 
+		if( NUM_CHANNELS == 2 ) *woptr++ = *roptr++;  // right 
+	}*/
+	//	data->OAvailable = false;
+	//}
 	//data->mutex.unlock(); 
 	return 0;
 }
@@ -150,9 +158,9 @@ this->_data.IAvailable = false;
 }
 }*/
 
-void PaIOSound::playVoice()
+void PaIOSound::playVoice(QString ip, quint16 port)
 {
-	AudioThread<SAMPLE>     *th = new AudioThread<SAMPLE>("127.0.0.1", 20705, &this->_data);
+	AudioThread<SAMPLE>     *th = new AudioThread<SAMPLE>(ip, port, &this->_data);
 	//AudioThread<SAMPLE>   th(Net, this->_data);
 
 	//th.setIOSound(this);

@@ -1,6 +1,7 @@
 #ifndef         ABSIOSOUND_H
 # define        ABSIOSOUND_H
 
+#include <QString>
 #include <iostream>
 #include "IOStreamData.hpp"
 #include "Encoder.h"
@@ -21,7 +22,7 @@ public:
 public:
         virtual void recordVoice() = 0;
         //virtual stopRecord() = 0;
-        virtual void playVoice() = 0;
+        virtual void playVoice(QString ip, quint16 port) = 0;
         //virtual StopPlay() = 0;
         virtual IOStreamData<T> *getdata() = 0;
         virtual Encoder                 &getEncode() = 0;
