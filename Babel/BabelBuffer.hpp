@@ -29,13 +29,13 @@ public:
 	{
 		if (size >= buffSize - wptr - 1)
 		{
-			strncpy_s(&(this->buffer[this->wptr]), size + 1, input, buffSize - wptr - 1);
-			strncpy_s(this->buffer, size + 1, &input[buffSize - wptr - 1], size - (buffSize - wptr - 1));
+			copy(&(this->buffer[this->wptr]), input, buffSize - wptr - 1);
+			copy(this->buffer, &input[buffSize - wptr - 1], size - (buffSize - wptr - 1));
 			this->wptr = size - (buffSize - wptr - 1);
 		}
 		else
 		{
-			strncpy_s(&(this->buffer[this->wptr]), size + 1, input, size);
+			copy(&(this->buffer[this->wptr]), input, size);
 			this->wptr += size;
 		}
 		this->emptyFlag++;
@@ -45,17 +45,26 @@ public:
 	{
 		if (size >= buffSize - rptr - 1)
 		{
-			strncpy_s(output, size + 1, &(this->buffer[this->rptr]), buffSize - rptr - 1);
-			strncpy_s(&output[buffSize - rptr - 1], size + 1, this->buffer, size - (buffSize - rptr - 1));
+			copy(output, &(this->buffer[this->rptr]), buffSize - rptr - 1);
+			copy(&output[buffSize - rptr - 1], this->buffer, size - (buffSize - rptr - 1));
 			this->rptr = size - (buffSize - rptr - 1);
 		}
 		else
 		{
-			strncpy_s(output, size + 1, &(this->buffer[this->rptr]), size);
+			copy(output, &(this->buffer[this->rptr]), size);
 			this->rptr += size;
 		}
 		output[size] = '\0';
 		this->emptyFlag--;
+	}
+
+	void	copy(T *dest, T *src, int size)
+	{
+		int	i = 0;
+		while(i < size)
+		{
+			dest[i] = src[i++];
+		}
 	}
 };
 
