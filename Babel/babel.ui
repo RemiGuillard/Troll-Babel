@@ -435,7 +435,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="IdentifiedLabel">
           <property name="text">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -446,7 +446,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QListView" name="listView">
+         <widget class="QListView" name="FriendList">
           <property name="minimumSize">
            <size>
             <width>311</width>
@@ -461,7 +461,7 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="3" column="0">
          <widget class="QGroupBox" name="DirectCall">
           <property name="minimumSize">
            <size>
@@ -474,6 +474,9 @@ p, li { white-space: pre-wrap; }
             <width>291</width>
             <height>51</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
           <property name="title">
            <string>Direct Call</string>
@@ -522,19 +525,65 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
       <widget class="QWidget" name="Calling">
-       <layout class="QGridLayout" name="gridLayout_7">
+       <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
-         <widget class="QLabel" name="inProgress">
-          <property name="text">
-           <string>Call in Progress</string>
+         <widget class="QWidget" name="widget_4" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>211</width>
+            <height>141</height>
+           </size>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="endCallButton">
-          <property name="text">
-           <string>Raccrocher</string>
+          <property name="maximumSize">
+           <size>
+            <width>211</width>
+            <height>141</height>
+           </size>
           </property>
+          <widget class="QLabel" name="inProgress">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>20</y>
+             <width>73</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Call in Progress</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="endCallButton">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>70</y>
+             <width>51</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>51</width>
+             <height>51</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>51</width>
+             <height>51</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-image: url(HangUp.png);
+background-position: auto;
+width: 50px;
+height:50px;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
