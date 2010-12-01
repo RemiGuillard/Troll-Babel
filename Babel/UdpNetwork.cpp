@@ -24,7 +24,7 @@ char*					UdpNetwork::packetRcv()
 	char	*data = new char[398];
 
 	this->_sock.readDatagram(data, 398);
-	return data;
+	return data; 
 }
 
 void					UdpNetwork::packetSend(const char *data)

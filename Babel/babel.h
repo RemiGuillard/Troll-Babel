@@ -11,7 +11,7 @@
 class Babel : public QMainWindow
 {
 	Q_OBJECT
-
+ 
 public:
 	Babel(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~Babel();
@@ -21,7 +21,7 @@ public slots:
 	void			connectToServer();
 	void			login();
 	void			appeler();
-//	void			endACall();
+	void			endACall();
 	void			dataReceived();
 //	void			disconnectedFromServer();
 //	void			sendData();

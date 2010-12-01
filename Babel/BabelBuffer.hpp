@@ -43,28 +43,31 @@ public:
 
 	void	readBlock(T *output, int size)
 	{
-		if (size >= buffSize - rptr - 1)
-		{
-			copy(output, &(this->buffer[this->rptr]), buffSize - rptr - 1);
-			copy(&output[buffSize - rptr - 1], this->buffer, size - (buffSize - rptr - 1));
-			this->rptr = size - (buffSize - rptr - 1);
-		}
-		else
-		{
-			copy(output, &(this->buffer[this->rptr]), size);
-			this->rptr += size;
-		}
-		output[size] = '\0';
-		this->emptyFlag--;
+			if (size >= buffSize - rptr - 1)
+			{
+				copy(output, &(this->buffer[this->rptr]), buffSize - rptr - 1);
+				copy(&output[buffSize - rptr - 1], this->buffer, size - (buffSize - rptr - 1));
+				this->rptr = size - (buffSize - rptr - 1);
+			}
+			else
+			{
+				copy(output, &(this->buffer[this->rptr]), size);
+				this->rptr += size;
+			}
+			output[size] = '\0';
+			this->emptyFlag--;
 	}
 
 	void	copy(T *dest, const T *src, int size)
 	{
-		int	i = 0;
-		while(i < size)
-		{
-			dest[i] = src[i++];
-		}
+		for(int i=0; i<size; ++i)
+			dest[i] = src[i];
+	}
+
+	void	emptyBlock(T *dest, int size, T sample)
+	{
+		for(int i=0; i<size; ++i)
+			dest[i] = sample;
 	}
 };
 

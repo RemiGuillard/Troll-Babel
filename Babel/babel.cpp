@@ -22,7 +22,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	/*Appel*/
 	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(appeler()));
 	//connect(this->ui.bindButton, SIGNAL(clicked()), this, SLOT(bindMyPort()));
-	//	      connect(this->ui.endCallButton, SIGNAL(clicked()), this, SLOT(endACall()));
+	connect(this->ui.endCallButton, SIGNAL(clicked()), this, SLOT(endACall()));
 	connect(&(this->_client.getSocket()), SIGNAL(readyRead()), this, SLOT(dataReceived()));
 
 	/*Test d'envoi de donnée en Udp*/
@@ -72,11 +72,12 @@ void            Babel::appeler()
 	this->_IOSound->playVoice(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
 }                                                                                                                                                                                                                                          
 
-/*void            Babel::endACall()
+void            Babel::endACall()
 {
-_client.disconnect();
-emit valueChanged(2);
-}*/
+	this->_IOSound->StopPlayRecord();
+	_client.disconnect();
+	emit valueChanged(2);
+}
 
 /*void            Babel::sendData()
 {
@@ -84,16 +85,16 @@ char*   buffer = "Coucou les copains";
 
 static_cast<QUdpSocket&>(this->_client.getSocket()).writeDatagram(buffer, 19, QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
 }*/
-
+ 
 void            Babel::dataReceived()
 {
 	DataClientPack  *rcv;
 	rcv = reinterpret_cast<DataClientPack*>(this->_client.packetRcv());
 	SAMPLE output[FRAMES_PER_BUFFER];
 
-	this->_IOSound->getEncode().decode(rcv->data, output);
-	this->_IOSound->getdata()->OMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
-	this->_IOSound->getdata()->OBuf->writeBlock(output, FRAMES_PER_BUFFER);
+	//this->_IOSound->getEncode().decode(rcv->data, output);
+	this->_IOSound->getdata()->OMaxFrameIndex = rcv->dataLenght;
+	this->_IOSound->getdata()->OBuf->writeBlock(rcv->data/*output*/, FRAMES_PER_BUFFER);
 }
 
 /*void            Babel::disconnectedFromServer()

@@ -17,15 +17,15 @@ typedef float SAMPLE;*/
 typedef short SAMPLE;
 
 class           PaIOSound : public AbsIOSound<SAMPLE>
-{
+{ 
 public:
 	PaIOSound();
 	~PaIOSound();
 public:
-	virtual void recordVoice();
-	virtual void playVoice(QString ip, quint16 port);
-	//virtual StopPlayRecord();
-	virtual IOStreamData<SAMPLE>    *getdata();
+	virtual void					recordVoice();
+	virtual void					playVoice(QString ip, quint16 port);
+	virtual void					StopPlayRecord();
+	virtual IOStreamData<SAMPLE>	*getdata();
 	virtual Encoder                 &getEncode();
 };
 

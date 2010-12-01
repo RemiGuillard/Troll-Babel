@@ -22,7 +22,7 @@ public:
 	void    setBuf(A *dest, A *from)
 	{
 		int i;
-		for (i = 0 ; i < FRAMES_PER_BUFFER ; i++)
+		for (i = 0 ; i < FRAMES_PER_BUFFER ; ++i)
 			dest[i] = from[i];
 	}
 
@@ -42,13 +42,13 @@ public:
 		{
 				T	tmp[160];
 				data->IBuf->readBlock(tmp, 160);
-				this->enc.encode(tmp, this->data->encoded);
+				//this->enc.encode(tmp, this->data->encoded);
 				DataClientPack  send;
 				send.dataLenght = FRAMES_PER_BUFFER;
-				this->setBuf(send.data, this->data->encoded);
+				this->setBuf(send.data, tmp);//this->data->encoded);
 				this->net.packetSend(reinterpret_cast<char*>(&send));
 		}
-		/*this->net.disconnect();*/
+		this->net.disconnect();
 		return ;
 	}
 private:
