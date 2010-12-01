@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>325</width>
-    <height>515</height>
+    <width>347</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -433,70 +433,93 @@ p, li { white-space: pre-wrap; }
        <property name="contextMenuPolicy">
         <enum>Qt::DefaultContextMenu</enum>
        </property>
-       <widget class="QGroupBox" name="DirectCall">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>400</y>
-          <width>291</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>291</width>
-          <height>51</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>291</width>
-          <height>51</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>Direct Call</string>
-        </property>
-        <widget class="QPushButton" name="callButton">
-         <property name="geometry">
-          <rect>
-           <x>210</x>
-           <y>20</y>
-           <width>75</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Call</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="PortClientLine">
-         <property name="geometry">
-          <rect>
-           <x>150</x>
-           <y>20</y>
-           <width>51</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>20705</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="IpClientLine">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>133</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>localhost</string>
-         </property>
-        </widget>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Contact List&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QListView" name="listView">
+          <property name="minimumSize">
+           <size>
+            <width>311</width>
+            <height>371</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QGroupBox" name="DirectCall">
+          <property name="minimumSize">
+           <size>
+            <width>291</width>
+            <height>51</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>291</width>
+            <height>51</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Direct Call</string>
+          </property>
+          <widget class="QPushButton" name="callButton">
+           <property name="geometry">
+            <rect>
+             <x>210</x>
+             <y>20</y>
+             <width>75</width>
+             <height>23</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Call</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="PortClientLine">
+           <property name="geometry">
+            <rect>
+             <x>150</x>
+             <y>20</y>
+             <width>51</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>20705</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="IpClientLine">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>20</y>
+             <width>133</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>127.0.0.1</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="Calling">
        <layout class="QGridLayout" name="gridLayout_7">
@@ -525,7 +548,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>325</width>
+     <width>347</width>
      <height>22</height>
     </rect>
    </property>
