@@ -27,11 +27,11 @@ public:
 
 	void	writeBlock(const T *input, int size)
 	{
-		if (size >= buffSize - wptr - 1)
+		if (size >= buffSize - wptr)
 		{
-			copy(&(this->buffer[this->wptr]), input, buffSize - wptr - 1);
-			copy(this->buffer, &input[buffSize - wptr - 1], size - (buffSize - wptr - 1));
-			this->wptr = size - (buffSize - wptr - 1);
+			copy(&(this->buffer[this->wptr]), input, buffSize - wptr);
+			copy(this->buffer, &input[buffSize - wptr - 1], size - (buffSize - wptr));
+			this->wptr = size - (buffSize - wptr);
 		}
 		else
 		{
@@ -43,18 +43,18 @@ public:
 
 	void	readBlock(T *output, int size)
 	{
-		if (size >= buffSize - rptr - 1)
+		if (size >= buffSize - rptr)
 		{
-			copy(output, &(this->buffer[this->rptr]), buffSize - rptr - 1);
-			copy(&output[buffSize - rptr - 1], this->buffer, size - (buffSize - rptr - 1));
-			this->rptr = size - (buffSize - rptr - 1);
+			copy(output, &(this->buffer[this->rptr]), buffSize - rptr);
+			copy(&output[buffSize - rptr], this->buffer, size - (buffSize - rptr));
+			this->rptr = size - (buffSize - rptr);
 		}
 		else
 		{
 			copy(output, &(this->buffer[this->rptr]), size);
 			this->rptr += size;
 		}
-		output[size] = '\0';
+		output[size] = 0;
 		this->emptyFlag--;
 	}
 
