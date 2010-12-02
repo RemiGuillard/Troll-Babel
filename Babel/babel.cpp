@@ -90,7 +90,7 @@ void            Babel::dataReceived()
 {
 	DataClientPack  *rcv;
 	rcv = reinterpret_cast<DataClientPack*>(this->_client.packetRcv());
-	SAMPLE output[160];
+	SAMPLE output[FRAMES_PER_BUFFER];
 
 	this->_IOSound->getEncode().decode(rcv->data, output);
 	this->_IOSound->getdata()->OMaxFrameIndex = rcv->dataLenght;

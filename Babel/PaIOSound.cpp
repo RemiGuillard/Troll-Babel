@@ -46,7 +46,7 @@ int PaRecordCallback(const void *input, void *output,
 	IOStreamData<SAMPLE> *data = static_cast<IOStreamData<SAMPLE> *>(userData);
 	const SAMPLE *riptr = static_cast<const SAMPLE *>(input);
 	unsigned long framesToCalc;
-	framesToCalc = frameCount * 2;
+	framesToCalc = frameCount * NUM_CHANNELS;
 
 	data->IBuf->writeBlock(riptr, framesToCalc);
 
@@ -65,7 +65,7 @@ void    PaIOSound::recordVoice()
 		NUM_CHANNELS, //output 2
 		PA_SAMPLE_TYPE, // short (PaInt16) pour speex
 		SAMPLE_RATE,  // 8000
-		FRAMES_PER_BUFFER / 2, // size buff 160
+		FRAMES_PER_BUFFER / NUM_CHANNELS, // size buff 160
 		PaRecordCallback,
 		static_cast<void *>(&this->_data));
 	if(_err != paNoError) 
@@ -101,7 +101,7 @@ void	PaIOSound::StopPlayRecord()
 	_err = Pa_StopStream(reinterpret_cast<PaStream *>(this->_stream));
 	if(_err != paNoError)
 		throw "Stopping fail";
-/*	_err = Pa_CloseStream(reinterpret_cast<PaStream *>(this->_stream));
+	/*_err = Pa_CloseStream(reinterpret_cast<PaStream *>(this->_stream));
 	if(_err != paNoError)
 		throw "closing fail";*/
 }

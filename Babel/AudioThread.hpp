@@ -26,7 +26,6 @@ public:
 			dest[i] = from[i];
 	}
 
-	///////////////////////////////////////////
 	void    run()
 	{
 		while (this->data->ThreadEnd)
