@@ -33,14 +33,14 @@ public:
 	{
 		while (this->data->ThreadEnd)
 		{
-				T	tmp[160];
-				
-				data->IBuf->readBlock(tmp, FRAMES_PER_BUFFER);
-				this->enc.encode(tmp, this->data->encoded);
-				DataClientPack  send;
-				send.dataLenght = FRAMES_PER_BUFFER;
-				this->setBuf(send.data, this->data->encoded);
-				this->net.packetSend(reinterpret_cast<char*>(&send));
+			T	tmp[FRAMES_PER_BUFFER];
+
+			data->IBuf->readBlock(tmp, FRAMES_PER_BUFFER);
+			this->enc.encode(tmp, this->data->encoded);
+			DataClientPack  send;
+			send.dataLenght = FRAMES_PER_BUFFER;
+			this->setBuf(send.data, this->data->encoded);
+			this->net.packetSend(reinterpret_cast<char*>(&send));
 		}
 		this->net.disconnect();
 		return ;

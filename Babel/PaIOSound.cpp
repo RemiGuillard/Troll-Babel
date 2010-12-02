@@ -103,7 +103,7 @@ void	PaIOSound::StopPlayRecord()
 	_err = Pa_StopStream(reinterpret_cast<PaStream *>(this->_stream));
 	if(_err != paNoError)
 		throw "Stopping fail";
-	_err = Pa_CloseStream(reinterpret_cast<PaStream *>(this->_stream));
+/*	_err = Pa_CloseStream(reinterpret_cast<PaStream *>(this->_stream));
 	if(_err != paNoError)
-		throw "closing fail";
+		throw "closing fail";*/
 }
