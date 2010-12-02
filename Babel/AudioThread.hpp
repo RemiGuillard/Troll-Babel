@@ -1,8 +1,6 @@
 #ifndef         AUDIOTHREAD_H
 # define        AUDIOTHREAD_H
 
-#include <QByteArray>
-#include <QQueue>
 #include <QThread>
 #include <QMessageBox>
 #include "IOStreamData.hpp"

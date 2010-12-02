@@ -1,8 +1,6 @@
 #include <QMessageBox>
 #include <String>
 
-#include <QByteArray>
-#include <QQueue>
 #include "PaIOSound.h"
 #include "AbsIOSound.hpp"
 #include "babel.h"
@@ -13,8 +11,6 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	ui.setupUi(this);
 	_server.createSocket();
 	_client.createSocket();
-	//	QString d(0);
-	//QMessageBox::information(this, "Information", d.setNum(sizeof(DataClientPack)));
 
 	this->_IOSound = new PaIOSound(); 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
