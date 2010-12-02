@@ -9,7 +9,7 @@ struct	DataClientPack
 	char	quality;
 	int		dataLenght;
 	char	reserved[16];
-	short	data[256];
+	char	data[256];
 }; 
 
 #endif	//	!DATACLIENTPACK_H

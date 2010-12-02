@@ -1,6 +1,8 @@
 #include <QMessageBox>
 #include <String>
 
+#include <QByteArray>
+#include <QQueue>
 #include "PaIOSound.h"
 #include "AbsIOSound.hpp"
 #include "babel.h"
@@ -11,6 +13,8 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	ui.setupUi(this);
 	_server.createSocket();
 	_client.createSocket();
+	//	QString d(0);
+	//QMessageBox::information(this, "Information", d.setNum(sizeof(DataClientPack)));
 
 	this->_IOSound = new PaIOSound(); 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
@@ -90,11 +94,11 @@ void            Babel::dataReceived()
 {
 	DataClientPack  *rcv;
 	rcv = reinterpret_cast<DataClientPack*>(this->_client.packetRcv());
-	SAMPLE output[FRAMES_PER_BUFFER];
+	SAMPLE output[160];
 
-	//this->_IOSound->getEncode().decode(rcv->data, output);
+	this->_IOSound->getEncode().decode(rcv->data, output);
 	this->_IOSound->getdata()->OMaxFrameIndex = rcv->dataLenght;
-	this->_IOSound->getdata()->OBuf->writeBlock(rcv->data/*output*/, FRAMES_PER_BUFFER);
+	this->_IOSound->getdata()->OBuf->writeBlock(output, rcv->dataLenght);
 }
 
 /*void            Babel::disconnectedFromServer()

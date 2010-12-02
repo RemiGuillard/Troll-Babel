@@ -1,3 +1,5 @@
+#include <QByteArray>
+#include <QQueue>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +15,7 @@ PaIOSound::PaIOSound()
 		throw "construction fail";
 	this->_data.IBuf = new BabelBuffer<SAMPLE>(4096);
 	this->_data.OBuf = new BabelBuffer<SAMPLE>(4096);
-	this->_data.IMaxFrameIndex = FRAMES_PER_BUFFER / NUM_CHANNELS;
+	this->_data.IMaxFrameIndex = FRAMES_PER_BUFFER;
 	this->_data.OMaxFrameIndex = 0;
 	this->_data.ThreadEnd = true;
 }
@@ -46,7 +48,7 @@ int PaRecordCallback(const void *input, void *output,
 	IOStreamData<SAMPLE> *data = static_cast<IOStreamData<SAMPLE> *>(userData);
 	const SAMPLE *riptr = static_cast<const SAMPLE *>(input);
 	unsigned long framesToCalc;
-	framesToCalc = frameCount;
+	framesToCalc = frameCount * 2;
 
 	data->IBuf->writeBlock(riptr, framesToCalc);
 
@@ -54,7 +56,6 @@ int PaRecordCallback(const void *input, void *output,
 	framesToCalc = data->OMaxFrameIndex;
 
 	data->OBuf->readBlock(woptr, framesToCalc);
-
 	return 0;
 }
 
@@ -66,7 +67,7 @@ void    PaIOSound::recordVoice()
 		NUM_CHANNELS, //output 2
 		PA_SAMPLE_TYPE, // short (PaInt16) pour speex
 		SAMPLE_RATE,  // 8000
-		FRAMES_PER_BUFFER / NUM_CHANNELS, // size buff 256
+		FRAMES_PER_BUFFER / 2, // size buff 160
 		PaRecordCallback,
 		static_cast<void *>(&this->_data));
 	if(_err != paNoError) 

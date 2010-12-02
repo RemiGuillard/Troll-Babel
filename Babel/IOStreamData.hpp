@@ -3,6 +3,8 @@
 
 #define FRAMES_PER_BUFFER (160)
 
+#include <QByteArray>
+#include <QQueue>
 #include "UdpNetwork.h"
 #include "BabelBuffer.hpp"
 

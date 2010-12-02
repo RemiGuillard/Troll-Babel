@@ -1,6 +1,8 @@
 #ifndef         AUDIOTHREAD_H
 # define        AUDIOTHREAD_H
 
+#include <QByteArray>
+#include <QQueue>
 #include <QThread>
 #include <QMessageBox>
 #include "IOStreamData.hpp"
@@ -26,26 +28,18 @@ public:
 			dest[i] = from[i];
 	}
 
-	/////////////////////////////////////////
-	void    setData(IOStreamData<T> &Data, IOStreamData<T> *obj)
-	{
-		Data.IAvailable = obj->IAvailable;
-		Data.IMaxFrameIndex = obj->IMaxFrameIndex;
-		Data.OAvailable = obj->IAvailable;      
-		this->setBuf<T>(Data.IBuf, obj->IBuf);
-	}
-
 	///////////////////////////////////////////
 	void    run()
 	{
 		while (this->data->ThreadEnd)
 		{
 				T	tmp[160];
-				data->IBuf->readBlock(tmp, 160);
-				//this->enc.encode(tmp, this->data->encoded);
+				
+				data->IBuf->readBlock(tmp, FRAMES_PER_BUFFER);
+				this->enc.encode(tmp, this->data->encoded);
 				DataClientPack  send;
 				send.dataLenght = FRAMES_PER_BUFFER;
-				this->setBuf(send.data, tmp);//this->data->encoded);
+				this->setBuf(send.data, this->data->encoded);
 				this->net.packetSend(reinterpret_cast<char*>(&send));
 		}
 		this->net.disconnect();
