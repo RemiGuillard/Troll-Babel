@@ -527,24 +527,27 @@ p, li { white-space: pre-wrap; }
       <widget class="QWidget" name="Calling">
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
-         <widget class="QWidget" name="widget_4" native="true">
+         <widget class="QGroupBox" name="groupBox_5">
           <property name="minimumSize">
            <size>
-            <width>211</width>
-            <height>141</height>
+            <width>251</width>
+            <height>311</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>211</width>
-            <height>141</height>
+            <width>251</width>
+            <height>311</height>
            </size>
+          </property>
+          <property name="title">
+           <string>UserName</string>
           </property>
           <widget class="QLabel" name="inProgress">
            <property name="geometry">
             <rect>
-             <x>70</x>
-             <y>20</y>
+             <x>90</x>
+             <y>40</y>
              <width>73</width>
              <height>16</height>
             </rect>
@@ -553,35 +556,51 @@ p, li { white-space: pre-wrap; }
             <string>Call in Progress</string>
            </property>
           </widget>
+          <widget class="QLabel" name="label">
+           <property name="geometry">
+            <rect>
+             <x>60</x>
+             <y>90</y>
+             <width>131</width>
+             <height>131</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>UnknownUser.png</pixmap>
+           </property>
+          </widget>
           <widget class="QPushButton" name="endCallButton">
            <property name="geometry">
             <rect>
              <x>80</x>
-             <y>70</y>
-             <width>51</width>
-             <height>51</height>
+             <y>240</y>
+             <width>101</width>
+             <height>41</height>
             </rect>
            </property>
            <property name="minimumSize">
             <size>
-             <width>51</width>
-             <height>51</height>
+             <width>1</width>
+             <height>1</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>51</width>
-             <height>51</height>
+             <width>200</width>
+             <height>200</height>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-image: url(HangUp.png);
-background-position: auto;
-width: 50px;
-height:50px;</string>
+            <string notr="true">text-align:right;
+padding-right: 10px;
+background-image: url(&quot;HangUp.png&quot;);
+background-repeat: no-repeat;</string>
            </property>
            <property name="text">
-            <string/>
+            <string>Raccrocher</string>
            </property>
           </widget>
          </widget>
