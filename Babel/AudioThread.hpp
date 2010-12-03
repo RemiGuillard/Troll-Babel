@@ -4,10 +4,9 @@
 #include <QThread>
 #include <QMessageBox>
 #include "IOStreamData.hpp"
-#include "AbsIOSound.hpp"
-#include "PaIOSound.h"
 #include "UdpNetwork.h"
 #include "DataClientPack.h"
+#include "Encoder.h"
 
 template <typename T>
 class   AudioThread : public QThread

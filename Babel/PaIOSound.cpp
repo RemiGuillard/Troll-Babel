@@ -1,8 +1,3 @@
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include "AbsIOSound.hpp"
-#include "portaudio.h"
 #include "PaIOSound.h"
 
 PaIOSound::PaIOSound()
@@ -87,10 +82,10 @@ Encoder         &PaIOSound::getEncode()
 
 void PaIOSound::playVoice(QString ip, quint16 port)
 {
-	AudioThread<SAMPLE>     *th = new AudioThread<SAMPLE>(ip, port, &this->_data);
+	this->th = new AudioThread<SAMPLE>(ip, port, &this->_data);
 
 	this->_data.ThreadEnd = true;
-	th->start();     
+	this->th->start();     
 	this->recordVoice();
 }
 

@@ -5,7 +5,7 @@
 #include <QObject>
 #include "AbsIOSound.hpp"
 #include "portaudio.h"
-#include "AudioThread.hpp"
+
 
 
 /*#define PA_SAMPLE_TYPE  paFloat32

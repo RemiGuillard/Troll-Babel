@@ -5,7 +5,7 @@
 #include <iostream>
 #include "IOStreamData.hpp"
 #include "Encoder.h"
-#include "UdpNetwork.h"
+#include "AudioThread.hpp"
 
 
 #define SAMPLE_RATE  (8000)
@@ -27,6 +27,7 @@ protected:
         IOStream                *_stream;
         IOStreamData<T>			_data;
         Encoder                 enc;
+		AudioThread<T>			*th;
 };
 
 #endif  //      !ABSIOSOUND_H

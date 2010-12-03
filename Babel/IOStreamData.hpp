@@ -3,7 +3,6 @@
 
 #define FRAMES_PER_BUFFER (160)
 
-#include "UdpNetwork.h"
 #include "BabelBuffer.hpp"
 
 template <typename T>
