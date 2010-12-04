@@ -19,11 +19,11 @@ typedef short SAMPLE;
 class           PaIOSound : public AbsIOSound<SAMPLE>
 { 
 public:
-	PaIOSound();
+	PaIOSound(UdpNetwork *net);
 	~PaIOSound();
 public:
 	virtual void					recordVoice();
-	virtual void					playVoice(QString ip, quint16 port);
+	virtual void					playVoice();
 	virtual void					StopPlayRecord();
 	virtual IOStreamData<SAMPLE>	*getdata();
 	virtual Encoder                 &getEncode();

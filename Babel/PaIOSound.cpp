@@ -1,6 +1,6 @@
 #include "PaIOSound.h"
 
-PaIOSound::PaIOSound()
+PaIOSound::PaIOSound(UdpNetwork *net)
 {
 	PaError _err;
 	_err = Pa_Initialize();
@@ -11,6 +11,7 @@ PaIOSound::PaIOSound()
 	this->_data.IMaxFrameIndex = FRAMES_PER_BUFFER;
 	this->_data.OMaxFrameIndex = 0;
 	this->_data.ThreadEnd = true;
+	this->th = new AudioThread<SAMPLE>(&this->_data, net);
 }
 
 PaIOSound::~PaIOSound()
@@ -80,10 +81,8 @@ Encoder         &PaIOSound::getEncode()
 	return this->enc;
 }
 
-void PaIOSound::playVoice(QString ip, quint16 port)
+void PaIOSound::playVoice()
 {
-	this->th = new AudioThread<SAMPLE>(ip, port, &this->_data);
-
 	this->_data.ThreadEnd = true;
 	this->th->start();     
 	this->recordVoice();

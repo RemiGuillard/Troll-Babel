@@ -12,9 +12,9 @@ template <typename T>
 class   AudioThread : public QThread
 {
 public:
-	AudioThread(QString ip, quint16 port, IOStreamData<T> *Data) : data(Data)
+	AudioThread(IOStreamData<T> *Data, UdpNetwork *Net) : data(Data), net(Net)
 	{
-		this->net.socketConnection(ip, port);
+		//this->net.socketConnection(ip, port);
 	}
 public:
 	template <typename A>
@@ -36,14 +36,14 @@ public:
 			DataClientPack  send;
 			send.dataLenght = FRAMES_PER_BUFFER;
 			this->setBuf(send.data, this->data->encoded);
-			this->net.packetSend(reinterpret_cast<char*>(&send));
+			this->net->packetSend(reinterpret_cast<char*>(&send));
 		}
-		this->net.disconnect();
+		//this->net.disconnect();
 		return ;
 	}
 private:
 	IOStreamData<T> *data;
-	UdpNetwork      net;    
+	UdpNetwork      *net;    
 	Encoder enc;
 };
 

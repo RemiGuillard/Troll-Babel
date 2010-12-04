@@ -19,7 +19,7 @@ public:
         typedef void* IOStream;
 public:
         virtual void			recordVoice() = 0;
-        virtual void			playVoice(QString ip, quint16 port) = 0;
+        virtual void			playVoice() = 0;
 		virtual void			StopPlayRecord() = 0;
         virtual IOStreamData<T> *getdata() = 0;
         virtual Encoder         &getEncode() = 0;

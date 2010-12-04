@@ -10,7 +10,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	_server.createSocket();
 	_client.createSocket();
 
-	this->_IOSound = new PaIOSound(); 
+	this->_IOSound = new PaIOSound(&_client); 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
 	connect(&(this->_server.getSocket()), SIGNAL(connected()), this, SLOT(changerPage()));
@@ -33,6 +33,7 @@ Babel::~Babel()
 }
 
 void            Babel::connectToServer()
+
 {
 	quint16 port = 0;
 	QString server;
@@ -67,7 +68,7 @@ void            Babel::appeler()
 {
 	emit valueChanged(3);
 	this->_client.socketConnection(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
-	this->_IOSound->playVoice(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
+	this->_IOSound->playVoice();
 }                                                                                                                                                                                                                                          
 
 void            Babel::endACall()
