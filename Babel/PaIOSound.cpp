@@ -30,6 +30,9 @@ PaIOSound::~PaIOSound()
 	_err = Pa_Terminate();
 	if(_err != paNoError)
 		throw "destruction fail";
+	delete this->th;
+	delete this->_data.IBuf;
+	delete this->_data.OBuf;
 }
 
 

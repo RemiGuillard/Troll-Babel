@@ -8,7 +8,6 @@ struct	DataClientPack
 	int		sampleRate;
 	char	quality;
 	int		dataLenght;
-	//char	reserved[16];
 	char	data[256];
 }; 
 

@@ -10,6 +10,8 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	_server.createSocket();
 	_client.createSocket();
 
+	/*QString	t(0);
+	QMessageBox::information(this, "Information", t.setNum(sizeof(DataClientPack)));*/
 	this->_IOSound = new PaIOSound(&_client); 
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
@@ -91,9 +93,12 @@ void            Babel::dataReceived()
 	rcv = reinterpret_cast<DataClientPack*>(this->_client.packetRcv());
 	SAMPLE output[FRAMES_PER_BUFFER];
 
+	/*QString	t(0);
+	QMessageBox::information(this, "Information", t.setNum(rcv->dataLenght));*/
 	this->_IOSound->getEncode().decode(rcv->data, output);
-	this->_IOSound->getdata()->OMaxFrameIndex = rcv->dataLenght;
-	this->_IOSound->getdata()->OBuf->writeBlock(output, rcv->dataLenght);
+	this->_IOSound->getdata()->OMaxFrameIndex = FRAMES_PER_BUFFER;
+	this->_IOSound->getdata()->OBuf->writeBlock(output, FRAMES_PER_BUFFER);
+	delete rcv;
 }
 
 /*void            Babel::disconnectedFromServer()

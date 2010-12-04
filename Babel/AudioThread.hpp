@@ -12,10 +12,7 @@ template <typename T>
 class   AudioThread : public QThread
 {
 public:
-	AudioThread(IOStreamData<T> *Data, UdpNetwork *Net) : data(Data), net(Net)
-	{
-		//this->net.socketConnection(ip, port);
-	}
+	AudioThread(IOStreamData<T> *Data, UdpNetwork *Net) : data(Data), net(Net) {}
 public:
 	template <typename A>
 	void    setBuf(A *dest, A *from)
@@ -38,7 +35,6 @@ public:
 			this->setBuf(send.data, this->data->encoded);
 			this->net->packetSend(reinterpret_cast<char*>(&send));
 		}
-		//this->net.disconnect();
 		return ;
 	}
 private:

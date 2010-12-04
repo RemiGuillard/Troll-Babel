@@ -24,7 +24,7 @@ void					UdpNetwork::socketConnection(const QString & hostName, quint16 port)
 char*					UdpNetwork::packetRcv()
 {
 	char	*data = new char[sizeof(DataClientPack)];
-
+	
 	this->_sock.readDatagram(data, sizeof(DataClientPack));
 	return data;
 }
