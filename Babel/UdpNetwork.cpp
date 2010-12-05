@@ -36,8 +36,11 @@ void					UdpNetwork::packetSend(const char *data)
 
 void					UdpNetwork::disconnect()
 {
-	_sock.close();
-	this->setSocketStatus(false);
+	if (this->getSocketStatus())
+	{
+		_sock.close();
+		this->setSocketStatus(false);
+	}
 }
 
 QAbstractSocket&	UdpNetwork::getSocket()

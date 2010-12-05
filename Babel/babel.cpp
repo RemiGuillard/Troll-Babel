@@ -463,10 +463,17 @@ void						Babel::notifCallIncomming(DataServerPack* data)
 	if (data->code == 22)
 	{
 		this->_calling = username.toStdString();
-
-		emit valueChanged(3);
-		this->_client.socketConnection(ip, 36693);
-		this->_IOSound->playVoice();
+		try {
+			this->_client.socketConnection(ip, 36697);
+			this->_IOSound->playVoice();
+			emit valueChanged(3);
+			}
+		catch (std::exception* e)
+		{
+			QMessageBox::information(this, "Information", e->what());
+			delete e;
+			this->_IOSound->StopPlayRecord();
+		}
 	}
 }
 
@@ -477,9 +484,17 @@ void						Babel::notifCallAccepted(DataServerPack* data)
 	QMessageBox::information(NULL, "test", ip);
 	QString		username = data->data;
 	this->_calling = username.toStdString();
-	emit valueChanged(3);
-	this->_client.socketConnection(ip, 36693);
-	this->_IOSound->playVoice();
+	try {
+		this->_client.socketConnection(ip, 36697);
+		this->_IOSound->playVoice();
+		emit valueChanged(3);
+		}
+	catch (std::exception* e)
+		{
+			QMessageBox::information(this, "Information", e->what());
+			delete e;
+			this->_IOSound->StopPlayRecord();
+		}
 }
 
 void						Babel::notifCallRefused(DataServerPack*) {}
@@ -493,9 +508,18 @@ void						Babel::callMyself()
 {
 	if (this->_test == false)
 	{
-		this->_client.socketConnection("127.0.0.1", 36693);
-		this->_IOSound->playVoice();
-		this->_test = true;
+		try {
+			this->_client.socketConnection("127.0.0.1", 36693);
+			this->_IOSound->playVoice();
+			this->_test = true;
+			}
+		catch (std::exception* e)
+		{
+			QMessageBox::information(this, "Information", e->what());
+			delete e;
+			this->_IOSound->StopPlayRecord();
+			this->_test = false;
+		}
 	}
 	else
 	{
