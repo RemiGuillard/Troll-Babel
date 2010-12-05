@@ -7,10 +7,8 @@
 #include "Encoder.h"
 #include "AudioThread.hpp"
 
-
 #define SAMPLE_RATE  (8000)
 #define NUM_CHANNELS    (2)
- 
 
 template <typename T>
 class           AbsIOSound

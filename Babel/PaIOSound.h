@@ -6,8 +6,6 @@
 #include "AbsIOSound.hpp"
 #include "portaudio.h"
 
-
-
 /*#define PA_SAMPLE_TYPE  paFloat32
 #define SAMPLE_SILENCE  (0.0f)
 typedef float SAMPLE;*/

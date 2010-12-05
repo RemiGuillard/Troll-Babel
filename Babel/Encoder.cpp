@@ -8,7 +8,7 @@ Encoder::Encoder(int quality)
 	speex_bits_init(&ebits);
 	enc_state = speex_encoder_init(&speex_nb_mode);
 	speex_encoder_ctl(enc_state,SPEEX_SET_QUALITY,&quality);
-	std::cout << "Encoder Created with quality = " << quality << std::endl;
+	//	std::cout << "Encoder Created with quality = " << quality << std::endl;
 	speex_bits_init(&dbits);
     dec_state = speex_decoder_init(&speex_nb_mode);
 }
@@ -17,7 +17,7 @@ Encoder::~Encoder()
 {
 	speex_bits_destroy(&ebits);
 	speex_encoder_destroy(enc_state);
-	std::cout << "Encoder destroyed" << std::endl;
+	//	std::cout << "Encoder destroyed" << std::endl;
 }
 
 

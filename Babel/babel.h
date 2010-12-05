@@ -11,7 +11,7 @@
 class Babel : public QMainWindow
 {
 	Q_OBJECT
- 
+
 public:
 	Babel(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~Babel();
