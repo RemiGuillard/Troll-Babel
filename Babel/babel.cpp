@@ -53,6 +53,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	connect(&(this->_server.getSocket()), SIGNAL(readyRead()), this, SLOT(serverAnswer()));
 
 	/////// APPEL ///////
+	connect(&(this->_client.getSocket()), SIGNAL(readyRead()), this, SLOT(dataReceived()));
 	connect(this->ui.testButton, SIGNAL(clicked()), this, SLOT(callMyself()));
 	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(callSomeone()));
 //	connect(this->ui.dirCallButton, SIGNAL(clicked()), this, SLOT(appeler()));
@@ -363,13 +364,13 @@ void				Babel::serverAnswer()
 
 }
 
-void						Babel::identified(DataServerPack* data)
+void						Babel::identified(DataServerPack*)
 {
 	emit valueChanged(2);
 	this->contactList();
 }
 
-void						Babel::registered(DataServerPack* data)
+void						Babel::registered(DataServerPack*)
 {
 	this->ui.loginField->setText(this->ui.RLoginField->text());
 	this->ui.passwordField->setText(this->ui.RPwdField->text());
@@ -448,22 +449,25 @@ void						Babel::notifContactDeleted(DataServerPack* data)
 
 void						Babel::notifCallIncomming(DataServerPack* data)
 {
-	QString	ip = &(data->data[32]);
-	QString		username = data->data;
-	username += " est en train d'essayer de vous joindre. Voulez vous accepter ?";
-	if (QMessageBox::question(this, "Incoming Call", username, QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-		data->code = 22;
-	else
-		data->code = 23;
-	data->id = this->counter++;
-	data->timeStamp = 0;
-	data->dataLenght = sizeof(data->data);
-	this->_server.packetSend(reinterpret_cast<char *>(data));
-
-	if (data->code == 22)
+	if (this->_client.getSocketStatus())
 	{
-		this->_calling = username.toStdString();
-		this->makeCall(ip);
+		QString	ip = &(data->data[32]);
+		QString		username = data->data;
+		username += " est en train d'essayer de vous joindre. Voulez vous accepter ?";
+		if (QMessageBox::question(this, "Incoming Call", username, QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			data->code = 22;
+		else
+			data->code = 23;
+		data->id = this->counter++;
+		data->timeStamp = 0;
+		data->dataLenght = sizeof(data->data);
+		this->_server.packetSend(reinterpret_cast<char *>(data));
+	
+		if (data->code == 22)
+		{
+			this->_calling = username.toStdString();
+			this->makeCall(ip);
+		}
 	}
 }
 
@@ -487,7 +491,10 @@ void						Babel::notifCallEnded(DataServerPack*)
 void						Babel::callMyself()
 {
 	if (this->_test == false)
+	{
 		this->makeCall("127.0.0.1");
+		this->_test = true;
+	}
 	else
 	{
 		this->endACall();
@@ -498,15 +505,17 @@ void						Babel::callMyself()
 void						Babel::makeCall(const QString &ip)
 {
 	try {
-			this->_client.socketConnection(ip, 36693);
+			this->_client.socketConnection(ip, 20705);
 			this->_IOSound->playVoice();
-			this->_test = true;
+			if (ip != "127.0.0.1")
+				emit valueChanged(3);
 			}
-		catch (std::exception* e)
+	catch (std::exception* e)
 		{
 			QMessageBox::information(this, "Information", e->what());
 			delete e;
 			this->_IOSound->StopPlayRecord();
-			this->_test = false;
+			this->_client.disconnect();
+			this->hangUp();
 		}
 }

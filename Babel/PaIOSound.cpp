@@ -104,12 +104,12 @@ void	PaIOSound::StopPlayRecord()
   if (this->_data.ThreadEnd == true)
   {
 	  this->_data.ThreadEnd = false;
-	  _err = Pa_IsStreamActive(reinterpret_cast<PaStream *>(this->_stream));
+/*	  _err = Pa_IsStreamActive(reinterpret_cast<PaStream *>(this->_stream));
 	  if (_err == 1)
-	  {
+	  {*/
 		  _err = Pa_StopStream(reinterpret_cast<PaStream *>(this->_stream));
 		  if(_err != paNoError)
 			  throw new PaStopStreamException;
-	  }
+	  //}
   }
 }
