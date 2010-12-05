@@ -76,6 +76,8 @@ private:
 	QMap<unsigned short, unsigned short>	_cmdList;
 	QMap<unsigned short, answer>			_serverCmd;
 	contact									_contact;
+	std::string								_calling;
+	bool									_test;
 };
 
 #endif // BABEL_H
