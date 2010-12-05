@@ -1,5 +1,6 @@
 #include <QMessageBox>
-#include <String>
+#include <QString>
+#include <exception>
 #include "babel.h"
 #include "DataClientPack.h"
 
@@ -9,10 +10,16 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	ui.setupUi(this);
 	_server.createSocket();
 	_client.createSocket();
-
-	/*QString	t(0);
-	QMessageBox::information(this, "Information", t.setNum(sizeof(DataClientPack)));*/
-	this->_IOSound = new PaIOSound(&_client); 
+	
+	try
+	{
+		this->_IOSound = new PaIOSound(&_client);
+	}
+	catch (std::exception* e)
+	{
+		QMessageBox::information(this, "Information", e->what());
+		delete e;
+	}
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(this, SIGNAL(valueChanged(int)), this->ui.stackWindows, SLOT(setCurrentIndex(int)));
 	connect(&(this->_server.getSocket()), SIGNAL(connected()), this, SLOT(changerPage()));
@@ -31,7 +38,8 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 
 Babel::~Babel()
 {
-
+  this->_IOSound->StopPlayRecord();
+  delete this->_IOSound;
 }
 
 void            Babel::connectToServer()
@@ -53,8 +61,8 @@ void            Babel::changerPage()
 
 void            Babel::login()
 {
-	std::string     login = ui.loginField->text().toStdString();    
-	std::string     pwd = ui.passwordField->text().toStdString();  
+	std::string     login = ui.loginField->text().toStdString();
+	std::string     pwd = ui.passwordField->text().toStdString();
 
 	QString toto;
 	toto = "Login: ";
@@ -68,16 +76,33 @@ void            Babel::login()
 
 void            Babel::appeler()
 {
-	emit valueChanged(3);
-	this->_client.socketConnection(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
-	this->_IOSound->playVoice();
-}                                                                                                                                                                                                                                          
+	try
+	{
+		this->_client.socketConnection(this->ui.IpClientLine->text(), this->ui.PortClientLine->text().toUShort());
+		this->_IOSound->playVoice();
+		emit valueChanged(3);
+	}
+	catch (std::exception* e)
+	{
+		QMessageBox::information(this, "Information", e->what());
+		delete e;
+		this->_IOSound->StopPlayRecord();
+	}
+}
 
 void            Babel::endACall()
 {
-	this->_IOSound->StopPlayRecord();
-	_client.disconnect();
-	emit valueChanged(2);
+	try
+	{
+		this->_IOSound->StopPlayRecord();
+		_client.disconnect();
+		emit valueChanged(2);
+	}
+	catch (std::exception* e)
+	{
+		QMessageBox::information(this, "Information", e->what());
+		delete e;
+	}
 }
 
 /*void            Babel::sendData()
@@ -86,7 +111,7 @@ char*   buffer = "Coucou les copains";
 
 static_cast<QUdpSocket&>(this->_client.getSocket()).writeDatagram(buffer, 19, QHostAddress(this->ui.IpClientLine->text()), this->ui.PortClientLine->text().toUShort());
 }*/
- 
+
 void            Babel::dataReceived()
 {
 	DataClientPack  *rcv;
