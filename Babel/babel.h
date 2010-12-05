@@ -31,6 +31,7 @@ public slots:
 	void			disconnectedFromServer();
 	void			updateContactList();
 	void			callMyself();
+	void			makeCall(const QString&);
 
 	/// ENVOI DE COMMANDE AU SERVER///
 	void			serverIdentify();

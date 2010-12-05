@@ -55,7 +55,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	/////// APPEL ///////
 	connect(this->ui.testButton, SIGNAL(clicked()), this, SLOT(callMyself()));
 	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(callSomeone()));
-	connect(this->ui.dirCallButton, SIGNAL(clicked()), this, SLOT(appeler()));
+//	connect(this->ui.dirCallButton, SIGNAL(clicked()), this, SLOT(appeler()));
 	connect(this->ui.endCallButton, SIGNAL(clicked()), this, SLOT(hangUp()));
 
 	/////// CONTACT ///////
@@ -463,17 +463,7 @@ void						Babel::notifCallIncomming(DataServerPack* data)
 	if (data->code == 22)
 	{
 		this->_calling = username.toStdString();
-		try {
-			this->_client.socketConnection(ip, 36697);
-			this->_IOSound->playVoice();
-			emit valueChanged(3);
-			}
-		catch (std::exception* e)
-		{
-			QMessageBox::information(this, "Information", e->what());
-			delete e;
-			this->_IOSound->StopPlayRecord();
-		}
+		this->makeCall(ip);
 	}
 }
 
@@ -481,20 +471,10 @@ void						Babel::notifCallAccepted(DataServerPack* data)
 {
 	QString	ip = &(data->data[32]);
 
-	QMessageBox::information(NULL, "test", ip);
+	//QMessageBox::information(NULL, "test", ip);
 	QString		username = data->data;
 	this->_calling = username.toStdString();
-	try {
-		this->_client.socketConnection(ip, 36697);
-		this->_IOSound->playVoice();
-		emit valueChanged(3);
-		}
-	catch (std::exception* e)
-		{
-			QMessageBox::information(this, "Information", e->what());
-			delete e;
-			this->_IOSound->StopPlayRecord();
-		}
+	this->makeCall(ip);
 }
 
 void						Babel::notifCallRefused(DataServerPack*) {}
@@ -507,9 +487,18 @@ void						Babel::notifCallEnded(DataServerPack*)
 void						Babel::callMyself()
 {
 	if (this->_test == false)
+		this->makeCall("127.0.0.1");
+	else
 	{
-		try {
-			this->_client.socketConnection("127.0.0.1", 36693);
+		this->endACall();
+		this->_test = false;
+	}
+}
+
+void						Babel::makeCall(const QString &ip)
+{
+	try {
+			this->_client.socketConnection(ip, 36693);
 			this->_IOSound->playVoice();
 			this->_test = true;
 			}
@@ -520,10 +509,4 @@ void						Babel::callMyself()
 			this->_IOSound->StopPlayRecord();
 			this->_test = false;
 		}
-	}
-	else
-	{
-		this->endACall();
-		this->_test = false;
-	}
 }
