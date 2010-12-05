@@ -30,6 +30,7 @@ public slots:
 	void			dataReceived();
 	void			disconnectedFromServer();
 	void			updateContactList();
+	void			callMyself();
 
 	/// ENVOI DE COMMANDE AU SERVER///
 	void			serverIdentify();

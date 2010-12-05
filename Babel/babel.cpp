@@ -52,6 +52,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	connect(&(this->_server.getSocket()), SIGNAL(readyRead()), this, SLOT(serverAnswer()));
 
 	/////// APPEL ///////
+	connect(this->ui.testButton, SIGNAL(clicked()), this, SLOT(callMyself()));
 	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(callSomeone()));
 	connect(this->ui.dirCallButton, SIGNAL(clicked()), this, SLOT(appeler()));
 	connect(this->ui.endCallButton, SIGNAL(clicked()), this, SLOT(hangUp()));
@@ -458,7 +459,7 @@ void						Babel::notifCallIncomming(DataServerPack* data)
 		QString		address(ip);
 
 		emit valueChanged(3);
-		this->_client.socketConnection(address, this->ui.PortClientLine->text().toUShort());
+		this->_client.socketConnection(address, 36693);
 		this->_IOSound->playVoice();
 	}
 }
@@ -469,7 +470,7 @@ void						Babel::notifCallAccepted(DataServerPack* data)
 	QString		address(ip);
 
 	emit valueChanged(3);
-	this->_client.socketConnection(address, this->ui.PortClientLine->text().toUShort());
+	this->_client.socketConnection(address, 36693);
 	this->_IOSound->playVoice();
 }
 
@@ -477,5 +478,14 @@ void						Babel::notifCallRefused(DataServerPack*) {}
 
 void						Babel::notifCallEnded(DataServerPack*)
 {
+	this->endACall();
+}
+
+void						Babel::callMyself()
+{
+	//emit valueChanged(3);
+	this->_client.socketConnection(QString(2130706433), 36693);
+	this->_IOSound->playVoice();
+	QMessageBox::information(NULL, "Test", "Teste de votre micro");
 	this->endACall();
 }
