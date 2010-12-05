@@ -1,6 +1,7 @@
 #include <QTcpSocket>
 #include <QMessageBox>
 #include "TcpNetwork.h"
+#include "DataServerPack.h"
 
 TcpNetwork::TcpNetwork() { this->setSocketStatus(false); }
 
@@ -17,19 +18,20 @@ void					TcpNetwork::socketConnection(const QString & hostName, quint16 port)
 	_sock.connectToHost(hostName, port);
 	this->_ip = hostName;
 	this->_port = port;
+	this->setSocketStatus(true);
 }
 
 char*					TcpNetwork::packetRcv()
 {
-	char	*data = new char[652];
+	char	*data = new char[sizeof(DataServerPack)];
 
-	_sock.read(data, 652);
+	_sock.read(data, sizeof(DataServerPack));
 	return data;
 }
 
 void					TcpNetwork::packetSend(const char *data)
 {
-	this->_sock.write(data, 652);
+	this->_sock.write(data, sizeof(DataServerPack));
 }
 
 void					TcpNetwork::disconnect()

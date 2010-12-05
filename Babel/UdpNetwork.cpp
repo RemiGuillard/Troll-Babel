@@ -31,7 +31,7 @@ char*					UdpNetwork::packetRcv()
 
 void					UdpNetwork::packetSend(const char *data)
 {
-	this->_sock.writeDatagram(data, sizeof(DataClientPack), QHostAddress(this->_ip), this->_port);
+	this->_sock.writeDatagram(data, sizeof(DataClientPack), QHostAddress(this->_ip.toUInt()), this->_port);
 }
 
 void					UdpNetwork::disconnect()

@@ -3,12 +3,11 @@
 
 struct	DataServerPack
 {
-	char	code[2];
-	char	id[2];
-	int		timeStamp;
-	int		dataLenght;
-	char	reserved[16];
-	char	data[512];
+	unsigned int	code:16;
+	unsigned int	id:16;
+	unsigned int	timeStamp:32;
+	unsigned int	dataLenght:32;
+	char			data[512];
 };
 
 #endif	//	!DATASERVERPACK_H
