@@ -14,7 +14,7 @@ const std::string&									contact::getContactStatus(const std::string& name) co
 
 void											contact::setContactStatus(const std::string& name, const std::string& status)
 {
-	_contact.insert(std::make_pair(name, status));
+	_contact[name] = status;
 }
 
 void											contact::delContact(const std::string &name)

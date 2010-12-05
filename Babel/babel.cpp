@@ -52,6 +52,7 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 	connect(&(this->_server.getSocket()), SIGNAL(readyRead()), this, SLOT(serverAnswer()));
 
 	/////// APPEL ///////
+	connect(this->ui.callButton, SIGNAL(clicked()), this, SLOT(callSomeone()));
 	connect(this->ui.dirCallButton, SIGNAL(clicked()), this, SLOT(appeler()));
 	connect(this->ui.endCallButton, SIGNAL(clicked()), this, SLOT(hangUp()));
 
@@ -303,7 +304,23 @@ void			Babel::getContactStatus()
 {
 }
 
-void			Babel::callSomeone() {}
+void			Babel::callSomeone()
+{
+	QString user = this->ui.FriendList->currentItem()->text();
+	user.truncate(user.indexOf("\t"));
+
+	DataServerPack	*data = new DataServerPack;
+	data->code = 20;
+	data->id = this->counter++;
+	data->timeStamp = 0;
+	data->dataLenght = sizeof(data->data);
+	memset(data->data, 0, 512);
+	memcpy(data->data, user.toStdString().c_str(), user.length());
+	this->_cmdList.insert(data->id, data->code);
+	this->_server.packetSend(reinterpret_cast<char *>(data));
+	delete data;
+}
+
 void			Babel::cancelCall() {}
 void			Babel::acceptCall() {}
 void			Babel::refuseCall() {}
@@ -324,15 +341,18 @@ void			Babel::hangUp()
 
 void				Babel::serverAnswer()
 {
-	DataServerPack	*data = reinterpret_cast<DataServerPack*>(this->_server.packetRcv());
+	while (this->_server.getSocket().bytesAvailable() != 0)
+	{
+		DataServerPack	*data = reinterpret_cast<DataServerPack*>(this->_server.packetRcv());
 
 //	QMap<int, unsigned short>::iterator	cmd = this->_cmdList.find(data->id);
 //	if (this->_cmdList.find(data->id) != this->_cmdList.end())
 //	(this->*(this->_serverCmd.find(this->_cmdList.find(data->id).value()).value()))(data);
 //  else
 
-	if (this->_serverCmd.find(data->code) != this->_serverCmd.end())
-		(this->*(*(this->_serverCmd.find(data->code))))(data);
+		if (this->_serverCmd.find(data->code) != this->_serverCmd.end())
+			(this->*(*(this->_serverCmd.find(data->code))))(data);
+	}
 
 }
 
@@ -347,12 +367,11 @@ void						Babel::registered(DataServerPack* data)
 	this->ui.loginField->setText(this->ui.RLoginField->text());
 	this->ui.passwordField->setText(this->ui.RPwdField->text());
 	QMessageBox::information(this, "Registered", "you are Registered");
-//	this->serverIdentify();
+	this->serverIdentify();
 }
 
 void						Babel::newContactStatus(DataServerPack* data)
 {
-	QMessageBox::information(this, &(data->data[32]), QString(data->data));
 	this->_contact.setContactStatus(data->data, &(data->data[32]));
 	this->updateContactList();
 }
