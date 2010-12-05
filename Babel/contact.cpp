@@ -19,7 +19,8 @@ void											contact::setContactStatus(const std::string& name, const std::str
 
 void											contact::delContact(const std::string &name)
 {
-	_contact.erase(_contact.find(name));
+	if (_contact.find(name) != _contact.end())
+		_contact.erase(_contact.find(name));
 }
 
 const std::map<std::string, int>&				contact::getWaitingList() const
@@ -34,5 +35,6 @@ void											contact::addWaiting(const std::string &name)
 
 void											contact::delWaiting(const std::string &name)
 {
-	this->_waitingContact.erase(this->_waitingContact.find(name));
+	if (this->_waitingContact.find(name) != this->_waitingContact.end())
+		this->_waitingContact.erase(this->_waitingContact.find(name));
 }

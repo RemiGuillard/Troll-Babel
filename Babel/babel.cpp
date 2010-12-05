@@ -34,6 +34,9 @@ Babel::Babel(QWidget *parent, Qt::WFlags flags)
 		QMessageBox::information(this, "Information", e->what());
 		delete e;
 	}
+
+	/////// CONNECTION ///////
+	connect(&(this->_server.getSocket()), SIGNAL(connected()), this, SLOT(changerPage()));
 	connect(this->ui.connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
 	connect(&(this->_server.getSocket()), SIGNAL(disconnected()), this, SLOT(disconnectedFromServer()));
 	connect(this->ui.actionLogout, SIGNAL(triggered()), this, SLOT(disconnectFromServer()));
@@ -240,38 +243,44 @@ void				Babel::addAContact()
 {
 	QString	name = QInputDialog::getText(this, "Ajouter un ami", "Inserez le login du contact");
 
-	DataServerPack	*data = new DataServerPack;
-	data->code = 10;
-	data->id = this->counter++;
-	data->timeStamp = 0;
-	data->dataLenght = sizeof(data->data);
-	memset(data->data, 0, 512);
-	if (name.length() < 32)
-		memcpy(data->data, name.toStdString().c_str(), name.length());
-	else
-		memcpy(data->data, name.toStdString().c_str(), 32);
-	this->_cmdList.insert(data->id, data->code);
-	this->_server.packetSend(reinterpret_cast<char *>(data));
-	delete data;
+	if (!name.isEmpty())
+	{
+		DataServerPack	*data = new DataServerPack;
+		data->code = 10;
+		data->id = this->counter++;
+		data->timeStamp = 0;
+		data->dataLenght = sizeof(data->data);
+		memset(data->data, 0, 512);
+		if (name.length() < 32)
+			memcpy(data->data, name.toStdString().c_str(), name.length());
+		else
+			memcpy(data->data, name.toStdString().c_str(), 32);
+		this->_cmdList.insert(data->id, data->code);
+		this->_server.packetSend(reinterpret_cast<char *>(data));
+		delete data;
+	}
 }
 
 void				Babel::delAContact()
 {
 	QString	name = QInputDialog::getText(this, "Supprimer un ami", "Inserez le login du contact");
 
-	DataServerPack	*data = new DataServerPack;
-	data->code = 12;
-	data->id = this->counter++;
-	data->timeStamp = 0;
-	data->dataLenght = sizeof(data->data);
-	memset(data->data, 0, 512);
-	if (name.length() < 32)
-		memcpy(data->data, name.toStdString().c_str(), name.length());
-	else
-		memcpy(data->data, name.toStdString().c_str(), 32);
-	this->_cmdList.insert(data->id, data->code);
-	this->_server.packetSend(reinterpret_cast<char *>(data));
-	delete data;
+	if (!name.isEmpty())
+	{
+		DataServerPack	*data = new DataServerPack;
+		data->code = 12;
+		data->id = this->counter++;
+		data->timeStamp = 0;
+		data->dataLenght = sizeof(data->data);
+		memset(data->data, 0, 512);
+		if (name.length() < 32)
+			memcpy(data->data, name.toStdString().c_str(), name.length());
+		else
+			memcpy(data->data, name.toStdString().c_str(), 32);
+		this->_cmdList.insert(data->id, data->code);
+		this->_server.packetSend(reinterpret_cast<char *>(data));
+		delete data;
+	}
 }
 
 void			Babel::acceptInvit() {}

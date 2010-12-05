@@ -196,7 +196,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PaCloseException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PaIniException.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PaIOSound.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PaOpenStreamException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PaStartStreamException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PaStopStreamException.cpp"
 				>
 			</File>
 			<File
@@ -276,7 +296,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PaCloseException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PaIniException.h"
+				>
+			</File>
+			<File
 				RelativePath=".\PaIOSound.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PaOpenStreamException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PaStartStreamException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PaStopStreamException.h"
 				>
 			</File>
 			<File
